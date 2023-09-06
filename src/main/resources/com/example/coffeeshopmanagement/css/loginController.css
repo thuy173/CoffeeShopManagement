@@ -1,0 +1,11 @@
+.login-btn{
+    -fx-background-color: linear-gradient(to bottom,#EADBC8,#EAC696);
+    -fx-effect: dropShadow(three-pass-box, rgba(0,0,0,0.2), 10.0, 0.0, 0.0, 10.0);
+    -fx-cursor: hand;
+}
+.login-btn:hover{
+    -fx-background-color: #AC8556;
+}
+.sigup-btn{
+
+}

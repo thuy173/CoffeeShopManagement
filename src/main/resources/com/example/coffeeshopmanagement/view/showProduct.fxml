@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="524.666666666666" prefWidth="1100.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane layoutX="85.0" layoutY="141.0" prefHeight="239.0" prefWidth="235.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <VBox prefHeight="200.0" prefWidth="320.0" styleClass="right-bar" stylesheets="@../css/showProduct.css" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="80.0" prefWidth="200.0">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="45.0" styleClass="transparent" stylesheets="@../css/showProduct.css">
+                           <graphic>
+                              <ImageView fitHeight="31.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/arrow-left.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Label text="Coffee milk" textFill="#624128">
+                           <font>
+                              <Font name="Berlin Sans FB" size="38.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="33.0" top="22.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="55.0" prefWidth="200.0" stylesheets="@../css/showProduct.css">
+                     <VBox.margin>
+                        <Insets left="30.0" right="30.0" />
+                     </VBox.margin>
+                     <children>
+                        <TextField prefHeight="28.0" prefWidth="190.0" promptText="Type here to search..." styleClass="transparent" stylesheets="@../css/showProduct.css">
+                           <font>
+                              <Font name="Berlin Sans FB" size="14.0" />
+                           </font>
+                        </TextField>
+                        <ImageView fitHeight="21.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/magnifying-glass.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <styleClass>
+                        <String fx:value="search-box" />
+                        <String fx:value="shadow" />
+                     </styleClass>
+                  </HBox>
+                  <Pane prefHeight="20.0" prefWidth="320.0" VBox.vgrow="ALWAYS" />
+                  <VBox alignment="CENTER" prefHeight="427.0" prefWidth="260.0" styleClass="coffee-cart" stylesheets="@../css/showProduct.css">
+                     <VBox.margin>
+                        <Insets bottom="6.0" left="30.0" right="30.0" />
+                     </VBox.margin>
+                     <children>
+                        <HBox prefHeight="44.0" prefWidth="260.0">
+                           <children>
+                              <Label alignment="TOP_LEFT" prefHeight="39.0" prefWidth="129.0" text="Coffee">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="21.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <Label alignment="TOP_LEFT" layoutX="10.0" layoutY="30.0" prefHeight="39.0" prefWidth="130.0" text="\$20">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="21.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="25.0" top="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <ImageView fitHeight="167.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/coffee.png" />
+                           </image>
+                        </ImageView>
+                        <HBox layoutX="10.0" layoutY="53.0" prefHeight="39.0" prefWidth="260.0">
+                           <children>
+                              <Label alignment="TOP_LEFT" prefHeight="39.0" prefWidth="129.0" text="Quantity:">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="21.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <ComboBox prefWidth="100.0" styleClass="comboBox" stylesheets="@../css/showProduct.css" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" styleClass="pay-btn" stylesheets="@../css/showProduct.css" text="PAY" textFill="#747373">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Berlin Sans FB" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </left>
+         <center>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="53.0" prefWidth="780.0" styleClass="nav-menu" stylesheets="@../css/showProduct.css">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="53.0" prefWidth="215.0" styleClass="menu-btn" stylesheets="@../css/showProduct.css" text="COFFEE">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Berlin Sans FB" size="14.0" />
+                           </font>
+                        </Button>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" style="-fx-background-color: #DAC0A3;">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Separator>
+                        <Button layoutX="60.0" layoutY="10.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="170.0" styleClass="menu-btn" stylesheets="@../css/showProduct.css" text="JUICE">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Berlin Sans FB" size="14.0" />
+                           </font>
+                        </Button>
+                        <Separator layoutX="225.0" layoutY="10.0" orientation="VERTICAL" prefHeight="200.0">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Separator>
+                        <Button layoutX="270.0" layoutY="10.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="170.0" styleClass="menu-btn" stylesheets="@../css/showProduct.css" text="CAKE">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Berlin Sans FB" size="14.0" />
+                           </font>
+                        </Button>
+                        <Separator layoutX="402.0" layoutY="10.0" orientation="VERTICAL" prefHeight="200.0">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Separator>
+                        <Button layoutX="453.0" layoutY="10.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="215.0" styleClass="menu-btn" stylesheets="@../css/showProduct.css" text="TEA">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Berlin Sans FB" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

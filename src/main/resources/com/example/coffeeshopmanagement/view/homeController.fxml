@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="fullHomePage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.coffeeshopmanagement.controller.HomeController">
+   <bottom>
+      <AnchorPane prefHeight="75.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox layoutX="14.0" layoutY="-24.0" prefHeight="75.0" prefWidth="1100.0" styleClass="nav-menu-home" stylesheets="@../css/homeController.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button fx:id="home_controller" mnemonicParsing="false" onMouseClicked="#toHome" prefHeight="75.0" prefWidth="183.333333" styleClass="menu-btn-home" stylesheets="@../css/homeController.css" text="Statistical">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/money-bag.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Berlin Sans FB" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="showProduct_controller" layoutX="70.0" layoutY="30.0" mnemonicParsing="false" onMouseClicked="#toOder" prefHeight="75.0" prefWidth="183.333333333" styleClass="menu-btn-home" stylesheets="@../css/homeController.css" text="Order">
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/coffee-cup.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Berlin Sans FB" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="dashboard_controller" layoutX="399.0" layoutY="30.0" mnemonicParsing="false" onMouseClicked="#toDashBoard" prefHeight="75.0" prefWidth="183.33333333" styleClass="menu-btn-home" stylesheets="@../css/homeController.css" text="Dashboard">
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/financial-profit.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Berlin Sans FB" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="ware_controller" layoutX="629.0" layoutY="30.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="183.33333333" styleClass="menu-btn-home" stylesheets="@../css/homeController.css" text="Warehouse">
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/warehouse.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Berlin Sans FB" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="employee_controller" layoutX="670.0" layoutY="10.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="183.3333333" styleClass="menu-btn-home" stylesheets="@../css/homeController.css" text="Employee">
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/employees.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Berlin Sans FB" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="employee_controller1" layoutX="743.0" layoutY="11.0" mnemonicParsing="false" onMouseClicked="#toEditProduct" prefHeight="75.0" prefWidth="183.33333" styleClass="menu-btn-home" stylesheets="@../css/homeController.css" text="Editing">
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/server-settings.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Berlin Sans FB" size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </bottom>
+   <center>
+      <AnchorPane prefHeight="524.6666666666666" prefWidth="1100.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
