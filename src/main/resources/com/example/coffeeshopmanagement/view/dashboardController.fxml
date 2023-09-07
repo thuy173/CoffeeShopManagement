@@ -25,7 +25,7 @@
                   <Insets top="3.0" />
                </HBox.margin>
             </ImageView>
-            <Label text="My acount" textFill="#a88860">
+            <Label fx:id="username" text="My acount" textFill="#a88860">
                <HBox.margin>
                   <Insets left="8.0" top="14.0" />
                </HBox.margin>

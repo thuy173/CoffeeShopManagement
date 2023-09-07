@@ -3,13 +3,19 @@ package com.example.coffeeshopmanagement.controller;
 import com.example.coffeeshopmanagement.database.JDBCConnect;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-public class DashBoardController {
+import java.net.URL;
+import java.util.ResourceBundle;
 
+public class DashBoardController implements Initializable {
+    @FXML
+    private Label username;
     @FXML
     private Button closeBtn;
 
@@ -44,5 +50,19 @@ public class DashBoardController {
             stage.close();
 
         }
+    }
+    public void displayUsername(){
+        String user = data.usernameadmin;
+        if (user != null) {
+            user = user.substring(0, 1).toUpperCase() + user.substring(1);
+            username.setText(user);
+        } else {
+            username.setText("Default Username");
+        }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        displayUsername();
     }
 }

@@ -65,9 +65,9 @@
             <Label layoutX="473.0" layoutY="228.0" text="Quantity" />
             <ComboBox fx:id="quantityInput" layoutX="540.0" layoutY="224.0" prefWidth="150.0" promptText="0" />
             <Button fx:id="importImageButton" layoutX="818.0" layoutY="212.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="87.0" styleClass="add-btn" stylesheets="@../css/showProduct.css" text="Import" />
-            <Button fx:id="updateButton" layoutX="978.0" layoutY="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="87.0" styleClass="add-btn" stylesheets="@../css/showProduct.css" text="Update" />
+            <Button fx:id="updateButton" layoutX="978.0" layoutY="32.0" mnemonicParsing="false" onAction="#updateProduct" prefHeight="32.0" prefWidth="87.0" styleClass="add-btn" stylesheets="@../css/showProduct.css" text="Update" />
             <Button fx:id="addButton" layoutX="978.0" layoutY="80.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="32.0" prefWidth="87.0" styleClass="add-btn" stylesheets="@../css/showProduct.css" text="Add" />
-            <Button fx:id="deleteButton" layoutX="978.0" layoutY="128.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="87.0" styleClass="add-btn" stylesheets="@../css/showProduct.css" text="Delete" />
+            <Button fx:id="deleteButton" layoutX="978.0" layoutY="128.0" mnemonicParsing="false" onAction="#deleteProduct" prefHeight="32.0" prefWidth="87.0" styleClass="add-btn" stylesheets="@../css/showProduct.css" text="Delete" />
          </children></AnchorPane>
    </children>
 </AnchorPane>

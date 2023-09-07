@@ -5,6 +5,7 @@ import com.example.coffeeshopmanagement.model.entity.Product;
 import com.example.coffeeshopmanagement.model.repository.ProductRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -228,8 +229,8 @@ public class EditProductController implements Initializable {
         idInput.clear();
         nameInput.clear();
         descriptionInput.clear();
-        categoryInput.setValue(null);
-        quantityInput.setValue(null);
+//        categoryInput.setValue(null);
+//        quantityInput.setValue(null);
         priceInput.clear();
         ingredientsInput.clear();
     }
@@ -263,13 +264,115 @@ public class EditProductController implements Initializable {
             newProduct.setIngredients(ingredients);
             newProduct.setAvailability(availability);
             productRepository.addProduct(newProduct);
-
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information message!");
+            alert.setHeaderText(null);
+            alert.setContentText("Successfully add!!");
+            alert.showAndWait();
             tableProduct.getItems().add(newProduct);
             tableProduct.refresh();
 
         }
+
+        clear();
     }
 
+    @FXML
+    private void updateProduct() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation message");
+        alert.setHeaderText("Are you sure you want to update this product?");
+        alert.setContentText("");
+
+        ButtonType confirm = new ButtonType("Update", ButtonBar.ButtonData.OK_DONE);
+        alert.getButtonTypes().setAll(confirm, ButtonType.CANCEL);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == confirm) {
+            Product products = tableProduct.getSelectionModel().getSelectedItem();
+            if(products != null){
+                String nameProduct = nameInput.getText();
+                String des = descriptionInput.getText();
+                String category = categoryInput.getValue();
+                Integer quantity = quantityInput.getValue();
+                Double price = Double.valueOf(priceInput.getText());
+                String ingredients = ingredientsInput.getText();
+                Boolean availability = Boolean.valueOf(availabilityInput.getValue());
+
+                products.setProductName(nameProduct);
+                products.setDescription(des);
+                products.setCategory(category);
+                products.setQuantity(quantity);
+                products.setPrice(price);
+                products.setIngredients(ingredients);
+                products.setAvailability(availability);
+
+                productRepository.updateProduct(products);
+                tableProduct.refresh();
+
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information message!");
+                alert.setHeaderText(null);
+                alert.setContentText("Successfully update!!");
+                alert.showAndWait();
+
+                clear();
+
+            }
+
+        }
+
+    }
+
+    @FXML
+    private void deleteProduct() {
+        Product products = tableProduct.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation message");
+        alert.setHeaderText("Are you sure you want to delete this product?");
+        alert.setContentText("");
+
+        ButtonType confirm = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
+        alert.getButtonTypes().setAll(confirm, ButtonType.CANCEL);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == confirm) {
+            if (products != null) {
+                productRepository.deleteProduct(products.getProductId());
+                // Cập nhật danh sách members sau khi xóa và hiển thị lại view
+                tableProduct.getItems().remove(products);
+                tableProduct.refresh();
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information message!");
+                alert.setHeaderText(null);
+                alert.setContentText("Successfully delete!!");
+                alert.showAndWait();
+                clear();
+
+            }
+        }
+
+
+//        Product product = tableProduct.getSelectionModel().getSelectedItem();
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setTitle("Confirmation message");
+//        alert.setHeaderText("Are you sure you want to delete this product?");
+//        alert.setContentText("");
+//
+//        ButtonType confirm = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
+//        alert.getButtonTypes().setAll(confirm, ButtonType.CANCEL);
+//        Optional<ButtonType> result = alert.showAndWait();
+//
+//        if (result.isPresent() && result.get() == confirm && product != null) {
+//            // Đặt availability của sản phẩm thành false trong cơ sở dữ liệu
+//            product.setAvailability(false);
+//            productRepository.updateProduct(product);
+//            FilteredList<Product> filteredList = new FilteredList<>(tableProduct.getItems(), p -> p.isAvailability());
+//            tableProduct.setItems(filteredList);
+//            // Cập nhật lại TableView để thể hiện thay đổi
+//            tableProduct.refresh();
+//            clear();
+//        }
+
+    }
     @FXML
     void close(ActionEvent event) {
         Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);

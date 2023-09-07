@@ -73,6 +73,7 @@ public class LoginController implements Initializable {
         String name = username.getText();
         String pass = password.getText();
         if (isValidCredentials(name, pass)) {
+            data.usernameadmin = name;
             // Tạo một Task để chờ 4 giây
             Task<Void> waitTask = new Task<Void>() {
                 @Override
@@ -139,6 +140,7 @@ public class LoginController implements Initializable {
 
         return isValid;
     }
+
     @FXML
     void close(ActionEvent event) {
         Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);

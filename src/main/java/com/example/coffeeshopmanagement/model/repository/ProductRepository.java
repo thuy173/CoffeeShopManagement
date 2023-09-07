@@ -16,6 +16,7 @@ public class ProductRepository {
     public ProductRepository() {
         this.jdbcConnect = new JDBCConnect();
     }
+
     public void addProduct(Product product) {
         try {
             // Implement logic to save a new product to the database
@@ -24,16 +25,18 @@ public class ProductRepository {
 
             Connection connection = jdbcConnect.getJDBCConnection();
 
-                    String insertQuery = "INSERT INTO product (product_name, description, category, price, ingredients, availability) " +
-                    "VALUES (?, ?, ?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO product (product_name, description, category, price,quantity, ingredients, availability) " +
+                    "VALUES (?, ?, ?, ?, ?, ?,?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
             preparedStatement.setString(1, product.getProductName());
             preparedStatement.setString(2, product.getDescription());
             preparedStatement.setString(3, product.getCategory());
             preparedStatement.setDouble(4, product.getPrice());
-            preparedStatement.setString(5, product.getIngredients());
-            preparedStatement.setBoolean(6, product.isAvailability());
+            preparedStatement.setInt(5, product.getQuantity());
+            preparedStatement.setString(6, product.getIngredients());
+            preparedStatement.setBoolean(7, product.isAvailability());
+
 
             preparedStatement.executeUpdate();
 
@@ -47,7 +50,40 @@ public class ProductRepository {
         }
     }
 
-    public List<Product> getAllProducts(){
+    public void updateProduct(Product updatedProduct) {
+        String sql = "UPDATE product SET product_name = ?, description = ?, category = ?, " +
+                "price = ?, quantity = ?, ingredients = ?, availability = ? " +
+                "WHERE product_id = ?";
+        Connection connection = jdbcConnect.getJDBCConnection();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, updatedProduct.getProductName());
+            statement.setString(2, updatedProduct.getDescription());
+            statement.setString(3, updatedProduct.getCategory());
+            statement.setDouble(4, updatedProduct.getPrice());
+            statement.setInt(5, updatedProduct.getQuantity());
+            statement.setString(6, updatedProduct.getIngredients());
+            statement.setBoolean(7, updatedProduct.isAvailability());
+            statement.setInt(8, updatedProduct.getProductId());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteProduct(int productId) {
+        String sql = "UPDATE product SET availability = false WHERE product_id = ?";
+        Connection connection = jdbcConnect.getJDBCConnection();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, productId);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Product> getAllProducts() {
         List<Product> products = new ArrayList<>();
 
         try {
@@ -57,7 +93,7 @@ public class ProductRepository {
 
             Connection connection = jdbcConnect.getJDBCConnection();
 
-                    String selectQuery = "SELECT * FROM product";
+            String selectQuery = "SELECT * FROM product WHERE availability = true";
             PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
 
             ResultSet resultSet = preparedStatement.executeQuery();
