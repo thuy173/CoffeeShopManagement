@@ -22,8 +22,8 @@
                         <Font name="Berlin Sans FB" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="username" layoutX="111.0" layoutY="166.0" opacity="0.51" prefHeight="25.0" prefWidth="167.0" style="-fx-border-width: 0 0 1 0;" />
-                  <PasswordField fx:id="password" layoutX="111.0" layoutY="219.0" opacity="0.51" prefHeight="25.0" prefWidth="167.0" style="-fx-border-width: 0 0 1 0;">
+                  <TextField fx:id="username" layoutX="111.0" layoutY="166.0" opacity="0.51" prefHeight="25.0" prefWidth="167.0" style="-fx-border-width: 0 0 1 0;" text="admin" />
+                  <PasswordField fx:id="password" layoutX="111.0" layoutY="219.0" opacity="0.51" prefHeight="25.0" prefWidth="167.0" style="-fx-border-width: 0 0 1 0;" text="12345678">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>

@@ -106,21 +106,74 @@ public class EditProductController implements Initializable {
 //    private InstructorsService instructorsService = new InstructorsServiceImpl();
 
 
-//xử lí comboBox
-    private String categorys[] = {"Coffee", "Tea", "Juice","Cake"};
+    //xử lí comboBox
+    private String categorys[] = {"Coffee", "Tea", "Juice", "Cake"};
 
     public void categoryList(ComboBox<String> category) {
         if (category == null) {
             category = new ComboBox<>();
         }
+
         List<String> categorylist = new ArrayList<>();
+
+        // Thêm giá trị mặc định vào danh sách
+//        categorylist.add("Coffee"); // Đây là giá trị mặc định
+
         for (String data : categorys) {
             categorylist.add(data);
-
         }
-        ObservableList listCategory = FXCollections.observableArrayList(categorylist);
+
+        ObservableList<String> listCategory = FXCollections.observableArrayList(categorylist);
         category.setItems(listCategory);
+
+        // Đặt giá trị mặc định
+        category.getSelectionModel().selectFirst(); // Chọn giá trị đầu tiên trong danh sách
     }
+    private String availabilitys[] = {"True", "False"};
+
+    public void setAvailability(ComboBox<String> availability) {
+        if (availability == null) {
+            availability = new ComboBox<>();
+        }
+
+        List<String> availabilitylist = new ArrayList<>();
+
+        // Thêm giá trị mặc định vào danh sách
+//        availabilitylist.add("True"); // Đây là giá trị mặc định
+
+        for (String data : availabilitys) {
+            availabilitylist.add(data);
+        }
+
+        ObservableList<String> listCategory = FXCollections.observableArrayList(availabilitylist);
+        availability.setItems(listCategory);
+
+        // Đặt giá trị mặc định
+        availability.getSelectionModel().selectFirst(); // Chọn giá trị đầu tiên trong danh sách
+    }
+    private Integer quantityList[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26};
+
+    public void setQuantity(ComboBox<Integer> quantity) {
+        if (quantity == null) {
+            quantity = new ComboBox<>();
+        }
+
+        List<Integer> quantitylist = new ArrayList<>();
+
+        // Thêm giá trị mặc định vào danh sách
+//        quantitylist.add(1); // Đây là giá trị mặc định
+
+        for (Integer data : quantityList) {
+            quantitylist.add(data);
+        }
+
+        ObservableList<Integer> listCategory = FXCollections.observableArrayList(quantitylist);
+        quantity.setItems(listCategory);
+
+        // Đặt giá trị mặc định
+        quantity.getSelectionModel().selectFirst(); // Chọn giá trị đầu tiên trong danh sách
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -131,6 +184,8 @@ public class EditProductController implements Initializable {
         });
         loadProductData();
         categoryList(categoryInput);
+        setAvailability(availabilityInput);
+        setQuantity(quantityInput);
     }
 
     //show lên textfield

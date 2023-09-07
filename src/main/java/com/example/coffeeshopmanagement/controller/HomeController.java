@@ -32,9 +32,11 @@ public class HomeController implements Initializable {
     @FXML
     private Button ware_controller;
     @FXML
+    private Button editProduct;
+    @FXML
     private BorderPane fullHomePage;
 
-
+    private Button activeButton;
     private JDBCConnect jdbcConnect;
 
     private Stage stage;
@@ -53,6 +55,8 @@ public class HomeController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         HomeMainController homeMainController = new HomeMainController();
         loadScene("homemainController.fxml", homeMainController);
+        activeButton = home_controller;
+        highlightActiveButton();
     }
 
     public void loadScene(String fxmlFileName, Object controller) {
@@ -75,6 +79,8 @@ public class HomeController implements Initializable {
 //        stage.close();
         HomeMainController homeMainController = new HomeMainController();
         loadScene("homemainController.fxml", homeMainController);
+        activeButton = home_controller; // Update the active button
+        highlightActiveButton();
     }
 
     @FXML
@@ -83,6 +89,8 @@ public class HomeController implements Initializable {
 //        stage.close();
         ShowProductController showProductController = new ShowProductController();
         loadScene("showProduct.fxml", showProductController);
+        activeButton = showProduct_controller; // Update the active button
+        highlightActiveButton();
     }
 
     @FXML
@@ -91,6 +99,8 @@ public class HomeController implements Initializable {
 //        stage.close();
         DashBoardController dashBoardController = new DashBoardController();
         loadScene("dashboardController.fxml", dashBoardController);
+        activeButton = dashboard_controller; // Update the active button
+        highlightActiveButton();
     }
 
     @FXML
@@ -99,6 +109,8 @@ public class HomeController implements Initializable {
 //        stage.close();
         EditProductController editProductController = new EditProductController();
         loadScene("editProductController.fxml", editProductController);
+        activeButton = editProduct; // Update the active button
+        highlightActiveButton();
     }
 
     @FXML
@@ -106,8 +118,16 @@ public class HomeController implements Initializable {
 
         stage.close();
     }
+    private void highlightActiveButton() {
+        // Reset the style of all menu buttons
+        home_controller.setStyle("");
+        showProduct_controller.setStyle("");
+        dashboard_controller.setStyle("");
+        employee_controller.setStyle("");
+        ware_controller.setStyle("");
+        editProduct.setStyle("");
 
-    public void setBoderColor() {
-
+        // Set the style of the active menu button
+        activeButton.setStyle("-fx-border-width: 0 0 5 0 ; -fx-border-color: #876445");
     }
 }
