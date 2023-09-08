@@ -1,5 +1,6 @@
 package com.example.coffeeshopmanagement.model.repository;
 
+import com.example.coffeeshopmanagement.controller.data;
 import com.example.coffeeshopmanagement.database.JDBCConnect;
 import com.example.coffeeshopmanagement.model.entity.Product;
 
@@ -25,17 +26,22 @@ public class ProductRepository {
 
             Connection connection = jdbcConnect.getJDBCConnection();
 
-            String insertQuery = "INSERT INTO product (product_name, description, category, price,quantity, ingredients, availability) " +
-                    "VALUES (?, ?, ?, ?, ?, ?,?)";
+            String insertQuery = "INSERT INTO product (product_name, description, category,image, price,quantity, ingredients, availability) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
             preparedStatement.setString(1, product.getProductName());
             preparedStatement.setString(2, product.getDescription());
             preparedStatement.setString(3, product.getCategory());
-            preparedStatement.setDouble(4, product.getPrice());
-            preparedStatement.setInt(5, product.getQuantity());
-            preparedStatement.setString(6, product.getIngredients());
-            preparedStatement.setBoolean(7, product.isAvailability());
+
+            String pathImage = "file:src/main/java/com/example/coffeeshopmanagement/image"+ product.getImage();
+            pathImage = pathImage.replace("\\","\\\\");
+
+            preparedStatement.setString(4,pathImage);
+            preparedStatement.setDouble(5, product.getPrice());
+            preparedStatement.setInt(6, product.getQuantity());
+            preparedStatement.setString(7, product.getIngredients());
+            preparedStatement.setBoolean(8, product.isAvailability());
 
 
             preparedStatement.executeUpdate();
@@ -51,7 +57,9 @@ public class ProductRepository {
     }
 
     public void updateProduct(Product updatedProduct) {
-        String sql = "UPDATE product SET product_name = ?, description = ?, category = ?, " +
+        String pathImage = data.path;
+        pathImage = pathImage.replace("\\","\\\\");
+        String sql = "UPDATE product SET product_name = ?, description = ?, category = ?, " +"image = ?"+
                 "price = ?, quantity = ?, ingredients = ?, availability = ? " +
                 "WHERE product_id = ?";
         Connection connection = jdbcConnect.getJDBCConnection();
@@ -59,11 +67,12 @@ public class ProductRepository {
             statement.setString(1, updatedProduct.getProductName());
             statement.setString(2, updatedProduct.getDescription());
             statement.setString(3, updatedProduct.getCategory());
-            statement.setDouble(4, updatedProduct.getPrice());
-            statement.setInt(5, updatedProduct.getQuantity());
-            statement.setString(6, updatedProduct.getIngredients());
-            statement.setBoolean(7, updatedProduct.isAvailability());
-            statement.setInt(8, updatedProduct.getProductId());
+            statement.setString(4,pathImage);
+            statement.setDouble(5, updatedProduct.getPrice());
+            statement.setInt(6, updatedProduct.getQuantity());
+            statement.setString(7, updatedProduct.getIngredients());
+            statement.setBoolean(8, updatedProduct.isAvailability());
+            statement.setInt(9, data.id);
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -104,6 +113,7 @@ public class ProductRepository {
                 product.setProductName(resultSet.getString("product_name"));
                 product.setDescription(resultSet.getString("description"));
                 product.setCategory(resultSet.getString("category"));
+                product.setImage(resultSet.getString("image"));
                 product.setPrice(resultSet.getDouble("price"));
                 product.setQuantity(resultSet.getInt("quantity"));
                 product.setIngredients(resultSet.getString("ingredients"));

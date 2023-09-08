@@ -5,18 +5,23 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="524.666666666666" prefWidth="1100.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="mainOrder" prefHeight="524.666666666666" prefWidth="1100.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane layoutX="85.0" layoutY="141.0" prefHeight="239.0" prefWidth="235.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -70,34 +75,13 @@
                         <Insets bottom="6.0" left="30.0" right="30.0" />
                      </VBox.margin>
                      <children>
-                        <HBox prefHeight="44.0" prefWidth="260.0">
-                           <children>
-                              <Label alignment="TOP_LEFT" prefHeight="39.0" prefWidth="129.0" text="Coffee">
-                                 <font>
-                                    <Font name="Berlin Sans FB" size="21.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </Label>
-                              <Label alignment="TOP_LEFT" layoutX="10.0" layoutY="30.0" prefHeight="39.0" prefWidth="130.0" text="\$20">
-                                 <font>
-                                    <Font name="Berlin Sans FB" size="21.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                           <VBox.margin>
-                              <Insets left="25.0" top="5.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <ImageView fitHeight="167.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../image/coffee.png" />
-                           </image>
-                        </ImageView>
+                        <TableView fx:id="menu_tableview" prefHeight="214.0" prefWidth="247.0">
+                          <columns>
+                            <TableColumn fx:id="productNameColum" prefWidth="133.33333778381348" text="Name" />
+                            <TableColumn fx:id="quantityColum" prefWidth="46.6666259765625" text="SL" />
+                              <TableColumn fx:id="priceColum" prefWidth="80.00001525878906" text="Price ($)" />
+                          </columns>
+                        </TableView>
                         <HBox layoutX="10.0" layoutY="53.0" prefHeight="39.0" prefWidth="260.0">
                            <children>
                               <Label alignment="TOP_LEFT" prefHeight="39.0" prefWidth="129.0" text="Quantity:">
@@ -108,13 +92,29 @@
                                     <Insets />
                                  </HBox.margin>
                               </Label>
-                              <ComboBox prefWidth="100.0" styleClass="comboBox" stylesheets="@../css/showProduct.css" />
+                              <ComboBox fx:id="quantityInput" prefWidth="100.0" styleClass="comboBox" stylesheets="@../css/showProduct.css" />
                            </children>
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
                         </HBox>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" styleClass="pay-btn" stylesheets="@../css/showProduct.css" text="PAY" textFill="#747373">
+                        <HBox layoutX="10.0" layoutY="291.0" prefHeight="35.0" prefWidth="260.0">
+                           <children>
+                              <Label alignment="TOP_LEFT" prefHeight="39.0" prefWidth="129.0" text="Total:">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="21.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="totalTextField" prefHeight="25.0" prefWidth="126.0" promptText="\$0.0" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Button fx:id="payBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" styleClass="pay-btn" stylesheets="@../css/showProduct.css" text="PAY" textFill="#747373">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
@@ -181,6 +181,19 @@
                         </Button>
                      </children>
                   </HBox>
+                  <AnchorPane prefHeight="471.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane fx:id="menu_scroll" layoutX="7.0" layoutY="7.0" prefHeight="460.0" prefWidth="765.0">
+                           <content>
+                              <GridPane fx:id="menu_gridPane" prefHeight="30.0" prefWidth="108.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                              </GridPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
                </children>
             </VBox>
          </center>

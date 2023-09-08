@@ -11,14 +11,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import org.apache.commons.io.FileUtils;
 
 public class EditProductController implements Initializable {
     @FXML
@@ -57,6 +63,8 @@ public class EditProductController implements Initializable {
     private TableColumn<Product, Integer> idProduct;
 
     @FXML
+    private TableColumn<Product, String> imageColum;
+    @FXML
     private ImageView imageProductInput;
 
     @FXML
@@ -88,6 +96,9 @@ public class EditProductController implements Initializable {
 
     @FXML
     private Button updateButton;
+    @FXML
+    private AnchorPane mainEditForm;
+    private Image image;
     private JDBCConnect jdbcConnect;
 
     private Stage stage;
@@ -196,6 +207,18 @@ public class EditProductController implements Initializable {
         nameInput.setText(product.getProductName());
         descriptionInput.setText(product.getDescription());
         categoryInput.setValue(product.getCategory());
+
+//        data.path = product.getImage();
+        String pathImage = "file:src/main/java/com/example/coffeeshopmanagement/image/"+ product.getImage();
+//        data.date = String.valueOf(product.getDate);
+//        data.id = product.getProductId();
+        image = new Image(product.getImage(), 190, 190, false,true);
+//        image = new Image(pathImage);
+//        System.out.println(pathImage);
+        System.out.println(product.getImage());
+        imageProductInput.setImage(image);
+
+
         quantityInput.setValue(product.getQuantity());
         priceInput.setText(String.valueOf(product.getPrice()));
         ingredientsInput.setText(product.getIngredients());
@@ -203,12 +226,16 @@ public class EditProductController implements Initializable {
 
     }
 
+
+
+
     //show lên bảng
     private void loadProductData() {
         idProduct.setCellValueFactory(new PropertyValueFactory<>("productId"));
         nameProduct.setCellValueFactory(new PropertyValueFactory<>("productName"));
         descriptionProduct.setCellValueFactory(new PropertyValueFactory<>("description"));
         categoryProduct.setCellValueFactory(new PropertyValueFactory<>("category"));
+        imageColum.setCellValueFactory(new PropertyValueFactory<>("image"));
         quantityProduct.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         priceProduct.setCellValueFactory(new PropertyValueFactory<>("price"));
         ingredientsProduct.setCellValueFactory(new PropertyValueFactory<>("ingredients"));
@@ -230,6 +257,8 @@ public class EditProductController implements Initializable {
         nameInput.clear();
         descriptionInput.clear();
 //        categoryInput.setValue(null);
+        data.path = " ";
+        imageProductInput.setImage(null);
 //        quantityInput.setValue(null);
         priceInput.clear();
         ingredientsInput.clear();
@@ -373,6 +402,53 @@ public class EditProductController implements Initializable {
 //        }
 
     }
+
+    public void productImportBtn(){
+//        FileChooser openFile = new FileChooser();
+//        openFile.getExtensionFilters().add(new FileChooser.ExtensionFilter("Open Image File","*png","*jpg","*jpeg"));
+//        File file = openFile.showOpenDialog(mainEditForm.getScene().getWindow());
+//        if(file != null){
+//            data.path = file.getAbsolutePath();
+//            image = new Image(file.toURI().toString(),160,190, false,true);
+//            imageProductInput.setImage(image);
+//
+//        }
+
+        FileChooser openFile = new FileChooser();
+        openFile.getExtensionFilters().add(new FileChooser.ExtensionFilter("Open Image File", "*.png", "*.jpg", "*.jpeg"));
+        File file = openFile.showOpenDialog(mainEditForm.getScene().getWindow());
+
+        if (file != null) {
+            // Đường dẫn đến thư mục mục tiêu trong dự án của bạn
+            String targetDirectoryPath = "src/main/java/com/example/coffeeshopmanagement/image";
+
+            try {
+                // Tạo một đối tượng File cho thư mục mục tiêu
+                File targetDirectory = new File(targetDirectoryPath);
+
+                // Kiểm tra nếu thư mục mục tiêu không tồn tại, hãy tạo nó
+                if (!targetDirectory.exists()) {
+                    targetDirectory.mkdirs();
+                }
+
+                // Sao chép tệp ảnh vào thư mục mục tiêu
+                File targetFile = new File(targetDirectory, file.getName());
+                FileUtils.copyFile(file, targetFile);
+
+                // Cập nhật đường dẫn của data (hoặc thực hiện các thay đổi khác cần thiết)
+                data.path = targetFile.getAbsolutePath();
+
+                // Tạo đối tượng Image từ tệp ảnh mới
+                Image image = new Image(targetFile.toURI().toString(), 160, 190, false, true);
+
+                // Đặt hình ảnh lên ImageView (giả sử imageProductInput là một ImageView)
+                imageProductInput.setImage(image);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @FXML
     void close(ActionEvent event) {
         Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);

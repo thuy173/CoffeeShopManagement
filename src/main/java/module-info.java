@@ -6,6 +6,7 @@ module com.example.coffeemanagement {
     requires java.sql;
     requires javafx.web;
     requires lombok;
+    requires org.apache.commons.io;
 
     opens com.example.coffeeshopmanagement to javafx.fxml;
     exports com.example.coffeeshopmanagement;
