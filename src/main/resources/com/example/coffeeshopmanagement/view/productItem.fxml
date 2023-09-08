@@ -17,7 +17,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="248.0">
                <children>
-                  <Label fx:id="productNameLabel" prefHeight="22.0" prefWidth="100.0" text="Label">
+                  <Label fx:id="productNameLabel" prefHeight="22.0" prefWidth="105.0" text="Label">
                      <font>
                         <Font name="Berlin Sans FB" size="20.0" />
                      </font>
@@ -25,10 +25,13 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="priceLabel" layoutX="18.0" layoutY="22.0" prefHeight="22.0" prefWidth="72.0" text="\$0.0">
+                  <Label fx:id="priceLabel" alignment="CENTER_RIGHT" layoutX="18.0" layoutY="22.0" prefHeight="22.0" prefWidth="59.0" text="\$0.0">
                      <font>
                         <Font name="Berlin Sans FB" size="20.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
                   </Label>
                </children>
             </HBox>
@@ -43,7 +46,7 @@
             <HBox alignment="CENTER" prefHeight="37.0" prefWidth="248.0">
                <children>
                   <Spinner fx:id="quantity" prefHeight="25.0" prefWidth="86.0" />
-                  <Button fx:id="addBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" styleClass="btn" stylesheets="@../css/cartProduct.css" text="Add">
+                  <Button fx:id="addBtn" mnemonicParsing="false" onAction="#addBtn" prefHeight="25.0" prefWidth="75.0" styleClass="btn" stylesheets="@../css/cartProduct.css" text="Add">
                      <font>
                         <Font name="Berlin Sans FB" size="14.0" />
                      </font>

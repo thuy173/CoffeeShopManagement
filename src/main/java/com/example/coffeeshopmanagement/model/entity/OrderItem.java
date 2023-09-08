@@ -14,4 +14,5 @@ public class OrderItem {
     private int quantity;
     private double itemPrice;
     private double subtotal;
+    private double discount;
 }

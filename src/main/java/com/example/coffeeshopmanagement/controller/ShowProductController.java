@@ -67,32 +67,34 @@ public class ShowProductController implements Initializable {
     }
 
     private ObservableList<Product> cartList = FXCollections.observableArrayList();
-    public ObservableList<Product> menuGetData(){
+
+    public ObservableList<Product> menuGetData() {
         String sql = "SELECT * FROM product WHERE availability = true";
 
         ObservableList<Product> listData = FXCollections.observableArrayList();
 
 
         Connection connection = jdbcConnect.getJDBCConnection();
-        try{
+        try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
-            Product  pro;
-            while (resultSet.next()){
+            Product pro;
+            while (resultSet.next()) {
                 pro = new Product(resultSet.getString("product_name"),
                         resultSet.getDouble("price"),
                         resultSet.getString("image"));
                 listData.add(pro);
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return listData;
     }
 
     private ProductItemController productItemController;
-    public void menuDisplay(){
+
+    public void menuDisplay() {
         cartList.clear();
         cartList.addAll(menuGetData());
 
@@ -101,28 +103,63 @@ public class ShowProductController implements Initializable {
         menu_gridPane.getRowConstraints().clear();
         menu_gridPane.getColumnConstraints().clear();
 
-        for(int i = 0; i < cartList.size(); i++){
+        for (int i = 0; i < cartList.size(); i++) {
 
             try {
                 FXMLLoader load = new FXMLLoader();
                 load.setLocation(getClass().getResource("/com/example/coffeeshopmanagement/view/productItem.fxml"));
                 AnchorPane pane = load.load();
                 productItemController = new ProductItemController();
-                productItemController =  load.getController();
+                productItemController = load.getController();
                 productItemController.setData(cartList.get(i));
 
-                if(col == 3){
+                if (col == 3) {
                     col = 0;
                     row += 1;
 
                 }
                 menu_gridPane.add(pane, col++, row);
 
-                GridPane.setMargin(pane,new Insets(29));
+                GridPane.setMargin(pane, new Insets(15, 0, 8, 55));
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
+        }
+    }
+
+    private int cID;
+
+    public void customerID() {
+
+        String sql = "SELECT MAX(customer_id) FROM customer";
+        Connection connection = jdbcConnect.getJDBCConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                cID = resultSet.getInt("MAX(customer_id)");
+            }
+            String checkCID = "SELECT MAX(customer_id) FROM receipt";
+            PreparedStatement preparedStatement1 = connection.prepareStatement(checkCID);
+            ResultSet resultSet1 = preparedStatement1.executeQuery();
+
+            int checkID = 0;
+            if(resultSet1.next()){
+
+                checkID = resultSet1.getInt("MAX(customer_id)");
+            }
+
+            if(cID == 0 ){
+
+                cID +=1;
+            }else if(cID == checkID){
+                cID +=1;
+            }
+            data.cID = cID;
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
