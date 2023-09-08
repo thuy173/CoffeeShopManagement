@@ -118,9 +118,10 @@
 .add-btn{
     -fx-background-color:#CA965C;
     -fx-text-fill:#EADBC8 ;
+     -fx-cursor: hand;
 }
 .add-btn:hover{
      -fx-background-color:#EADBC8;
      -fx-text-fill:#624128 ;
-     -fx-cursor: hand;
+
 }

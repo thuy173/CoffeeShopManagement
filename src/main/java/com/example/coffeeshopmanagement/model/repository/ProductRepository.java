@@ -34,7 +34,7 @@ public class ProductRepository {
             preparedStatement.setString(2, product.getDescription());
             preparedStatement.setString(3, product.getCategory());
 
-            String pathImage = "file:src/main/java/com/example/coffeeshopmanagement/image"+ product.getImage();
+            String pathImage = data.path;
             pathImage = pathImage.replace("\\","\\\\");
 
             preparedStatement.setString(4,pathImage);
@@ -59,7 +59,7 @@ public class ProductRepository {
     public void updateProduct(Product updatedProduct) {
         String pathImage = data.path;
         pathImage = pathImage.replace("\\","\\\\");
-        String sql = "UPDATE product SET product_name = ?, description = ?, category = ?, " +"image = ?"+
+        String sql = "UPDATE product SET product_name = ?, description = ?, category = ?, image = ?,"+
                 "price = ?, quantity = ?, ingredients = ?, availability = ? " +
                 "WHERE product_id = ?";
         Connection connection = jdbcConnect.getJDBCConnection();
@@ -72,7 +72,7 @@ public class ProductRepository {
             statement.setInt(6, updatedProduct.getQuantity());
             statement.setString(7, updatedProduct.getIngredients());
             statement.setBoolean(8, updatedProduct.isAvailability());
-            statement.setInt(9, data.id);
+            statement.setInt(9, updatedProduct.getProductId());
 
             statement.executeUpdate();
         } catch (SQLException e) {

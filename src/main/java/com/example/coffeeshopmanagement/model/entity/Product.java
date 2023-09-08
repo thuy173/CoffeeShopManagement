@@ -19,4 +19,9 @@ public class Product {
     private String ingredients;
     private boolean availability;
 
+    public Product(String productName,double price, String image){
+        this.productName = productName;
+        this.price = price;
+        this.image = image;
+    }
 }

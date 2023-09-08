@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="cardProduct" prefHeight="220.0" prefWidth="180.0" stylesheets="@../css/cartProduct.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.coffeeshopmanagement.controller.ProductItemController">
+   <children>
+      <VBox layoutX="24.0" prefHeight="200.0" prefWidth="248.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="248.0">
+               <children>
+                  <Label fx:id="productNameLabel" prefHeight="22.0" prefWidth="100.0" text="Label">
+                     <font>
+                        <Font name="Berlin Sans FB" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="priceLabel" layoutX="18.0" layoutY="22.0" prefHeight="22.0" prefWidth="72.0" text="\$0.0">
+                     <font>
+                        <Font name="Berlin Sans FB" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <AnchorPane prefHeight="140.0" prefWidth="165.0">
+               <children>
+                  <ImageView fx:id="imageProduct" fitHeight="140.0" fitWidth="165.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="3.0" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="4.0" left="5.0" right="5.0" top="4.0" />
+               </VBox.margin>
+            </AnchorPane>
+            <HBox alignment="CENTER" prefHeight="37.0" prefWidth="248.0">
+               <children>
+                  <Spinner fx:id="quantity" prefHeight="25.0" prefWidth="86.0" />
+                  <Button fx:id="addBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" styleClass="btn" stylesheets="@../css/cartProduct.css" text="Add">
+                     <font>
+                        <Font name="Berlin Sans FB" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="8.0" top="3.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+   <styleClass>
+      <String fx:value="card" />
+      <String fx:value="shadow" />
+   </styleClass>
+</AnchorPane>

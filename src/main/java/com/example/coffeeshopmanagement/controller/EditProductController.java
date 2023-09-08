@@ -208,10 +208,13 @@ public class EditProductController implements Initializable {
         descriptionInput.setText(product.getDescription());
         categoryInput.setValue(product.getCategory());
 
+        //        data.date = String.valueOf(product.getDate);
+        //        data.id = product.getProductId();
+
 //        data.path = product.getImage();
         String pathImage = "file:src/main/java/com/example/coffeeshopmanagement/image/"+ product.getImage();
-//        data.date = String.valueOf(product.getDate);
-//        data.id = product.getProductId();
+//        String pathImage = "File:" + product.getImage();
+
         image = new Image(product.getImage(), 190, 190, false,true);
 //        image = new Image(pathImage);
 //        System.out.println(pathImage);
@@ -404,15 +407,6 @@ public class EditProductController implements Initializable {
     }
 
     public void productImportBtn(){
-//        FileChooser openFile = new FileChooser();
-//        openFile.getExtensionFilters().add(new FileChooser.ExtensionFilter("Open Image File","*png","*jpg","*jpeg"));
-//        File file = openFile.showOpenDialog(mainEditForm.getScene().getWindow());
-//        if(file != null){
-//            data.path = file.getAbsolutePath();
-//            image = new Image(file.toURI().toString(),160,190, false,true);
-//            imageProductInput.setImage(image);
-//
-//        }
 
         FileChooser openFile = new FileChooser();
         openFile.getExtensionFilters().add(new FileChooser.ExtensionFilter("Open Image File", "*.png", "*.jpg", "*.jpeg"));
@@ -423,16 +417,17 @@ public class EditProductController implements Initializable {
             String targetDirectoryPath = "src/main/java/com/example/coffeeshopmanagement/image";
 
             try {
-                // Tạo một đối tượng File cho thư mục mục tiêu
-                File targetDirectory = new File(targetDirectoryPath);
+                // Tạo một thư mục riêng cho tệp ảnh đã sao chép (ví dụ: 'copied_images')
+                String copiedImagesDirectoryPath = targetDirectoryPath + "/copied_images";
+                File copiedImagesDirectory = new File(copiedImagesDirectoryPath);
 
-                // Kiểm tra nếu thư mục mục tiêu không tồn tại, hãy tạo nó
-                if (!targetDirectory.exists()) {
-                    targetDirectory.mkdirs();
+                // Kiểm tra nếu thư mục chứa tệp ảnh sao chép không tồn tại, hãy tạo nó
+                if (!copiedImagesDirectory.exists()) {
+                    copiedImagesDirectory.mkdirs();
                 }
 
-                // Sao chép tệp ảnh vào thư mục mục tiêu
-                File targetFile = new File(targetDirectory, file.getName());
+                // Sao chép tệp ảnh vào thư mục chứa tệp ảnh đã sao chép
+                File targetFile = new File(copiedImagesDirectory, file.getName());
                 FileUtils.copyFile(file, targetFile);
 
                 // Cập nhật đường dẫn của data (hoặc thực hiện các thay đổi khác cần thiết)
