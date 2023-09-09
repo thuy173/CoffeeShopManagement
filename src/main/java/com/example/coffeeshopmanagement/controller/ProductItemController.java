@@ -11,10 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 public class ProductItemController implements Initializable {
@@ -72,91 +69,116 @@ public class ProductItemController implements Initializable {
     }
 
     public void addBtn() {
-
-        ShowProductController mFrom = new ShowProductController();
-        mFrom.customerID();
-
+        // Kiểm tra và lấy thông tin khách hàng
+        ShowProductController showProductController = new ShowProductController();
+        showProductController.customerID();
         qty = quantity.getValue();
 
         String checkAvailable = "SELECT availability FROM product WHERE product_id = ?";
-        String insertData = "INSERT INTO order_item(order_item_id, quantity, item_price, discount, subtotal) VALUES ( ?, ?, ?, ?, ?)";
+        String insertData = "INSERT INTO order_item(order_item_id, order_id, product_id, quantity, item_price, discount, subtotal) VALUES (?, ?, ?, ?, ?, ?, ?)";
         String updateProductQuantity = "UPDATE product SET quantity = quantity - ? WHERE product_id = ?";
         String selectStock = "SELECT quantity_in_stock FROM inventory WHERE product_id = ?";
 
         Connection connection = jdbcConnect.getJDBCConnection();
+        PreparedStatement insertStatement = null;
+        PreparedStatement updateQuantityStatement = null;
 
         try {
-            // Check product availability
+            // Kiểm tra sản phẩm có sẵn không
             PreparedStatement availabilityStatement = connection.prepareStatement(checkAvailable);
-            availabilityStatement.setString(1, String.valueOf(products.getProductId()));
+            availabilityStatement.setInt(1, products.getProductId());
             ResultSet availabilityResult = availabilityStatement.executeQuery();
 
             if (availabilityResult.next()) {
                 String check = availabilityResult.getString("availability");
-
                 if ("true".equals(check) || qty == 0) {
-                    // Product is not available or quantity is 0
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Something Wrong:3");
-                    alert.showAndWait();
+                    // Sản phẩm không sẵn có hoặc số lượng là 0
+                    showErrorMessage("This product is not available.");
                     return;
                 }
             }
 
-
-            // Check product stock
+            // Kiểm tra số lượng trong kho
             PreparedStatement stockStatement = connection.prepareStatement(selectStock);
-            stockStatement.setString(1, String.valueOf(products.getProductId()));
+            stockStatement.setInt(1, products.getProductId());
             ResultSet stockResult = stockStatement.executeQuery();
 
             int checkStock = 0;
             if (stockResult.next()) {
                 checkStock = stockResult.getInt("quantity_in_stock");
-              
-            }
 
-            if (checkStock < qty) {
-                // Product is out of stock
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("This product is out of stock");
-                alert.showAndWait();
-                return;
+
+                if (checkStock < products.getQuantity()) {
+                    // Sản phẩm đã hết hàng
+                    showErrorMessage("This product is out of stock.");
+                    return;
+                }
             }
-            products = new Product();
-            products.setPrice(products.getPrice());
-            orderItem.setProduct(products);
-            // Insert order item
-            PreparedStatement insertStatement = connection.prepareStatement(insertData);
+            Product product = new Product();
+            product.setPrice(products.getPrice()); // Thay thế 10.0 bằng giá trị thực tế của sản phẩm
+
+            // Gán đối tượng Product cho OrderItem
+            orderItem.setProduct(product);
+            // Tạo và thêm order item
+//            if (orderItem.getProduct() != null) {
+            insertStatement = connection.prepareStatement(insertData);
             insertStatement.setInt(1, orderItem.getOrderItemId());
-//            insertStatement.setString(2, String.valueOf(products.getProductId())); // Assuming productID is a String
-            insertStatement.setInt(2, qty);
-            insertStatement.setDouble(3, orderItem.getProduct().getPrice());
-            insertStatement.setDouble(4, orderItem.getDiscount());
+            insertStatement.setInt(2, showProductController.customerID()); // Sử dụng customer ID đã lấy ở trước đó
+            insertStatement.setInt(3, products.getProductId());
+            insertStatement.setInt(4, qty);
+            insertStatement.setDouble(5, orderItem.getProduct().getPrice());
+            insertStatement.setDouble(6, orderItem.getDiscount());
             double subtotal = orderItem.getItemPrice() * qty - orderItem.getDiscount();
-            insertStatement.setDouble(5, subtotal);
+            insertStatement.setDouble(7, subtotal);
             insertStatement.executeUpdate();
-            insertStatement.close();
 
-            // Update product quantity
-            PreparedStatement updateQuantityStatement = connection.prepareStatement(updateProductQuantity);
+//            } else {
+//                showErrorMessage("error");
+                // Xử lý khi orderItem.getProduct() là null, ví dụ: đặt giá trị mặc định hoặc hiển thị thông báo lỗi.
+//            }
+            // Cập nhật số lượng sản phẩm trong kho
+            updateQuantityStatement = connection.prepareStatement(updateProductQuantity);
             updateQuantityStatement.setInt(1, qty);
-            updateQuantityStatement.setString(2, String.valueOf(products.getProductId()));
+            updateQuantityStatement.setInt(2, products.getProductId());
             updateQuantityStatement.executeUpdate();
-            updateQuantityStatement.close();
 
-            // Close all prepared statements and the connection here
+            // Hiển thị thông báo thành công
+            showSuccessMessage("Product added successfully!");
 
-            // Optionally, you can notify the user that the item has been added to the cart or order successfully.
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle any database-related exceptions here
+            e.printStackTrace(); // Xử lý bất kỳ lỗi cơ sở dữ liệu nào ở đây
+        } finally {
+            try {
+                if (insertStatement != null) {
+                    insertStatement.close();
+                }
+                if (updateQuantityStatement != null) {
+                    updateQuantityStatement.close();
+                }
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-//    public void addBtn(){
+    private void showErrorMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error Message");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void showSuccessMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    //    public void addBtn(){
 //        qty = quantity.getValue();
 //
 //        String check = " ";

@@ -130,37 +130,39 @@ public class ShowProductController implements Initializable {
 
     private int cID;
 
-    public void customerID() {
+    public int customerID() {
+        int cID = 0;
 
         String sql = "SELECT MAX(customer_id) FROM customer";
         Connection connection = jdbcConnect.getJDBCConnection();
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
+
             if (resultSet.next()) {
                 cID = resultSet.getInt("MAX(customer_id)");
             }
+
             String checkCID = "SELECT MAX(customer_id) FROM receipt";
             PreparedStatement preparedStatement1 = connection.prepareStatement(checkCID);
             ResultSet resultSet1 = preparedStatement1.executeQuery();
 
             int checkID = 0;
             if(resultSet1.next()){
-
                 checkID = resultSet1.getInt("MAX(customer_id)");
             }
 
             if(cID == 0 ){
-
                 cID +=1;
             }else if(cID == checkID){
                 cID +=1;
             }
-            data.cID = cID;
-
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return cID;
     }
 
     @Override
