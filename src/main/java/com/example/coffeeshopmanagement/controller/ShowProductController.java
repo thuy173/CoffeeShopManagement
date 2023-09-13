@@ -131,7 +131,7 @@ public class ShowProductController implements Initializable {
     private int cID;
 
     public int customerID() {
-        int cID = 0;
+        cID = 0;
 
         String sql = "SELECT MAX(customer_id) FROM customer";
         Connection connection = jdbcConnect.getJDBCConnection();

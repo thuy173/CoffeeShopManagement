@@ -1,6 +1,8 @@
 package com.example.coffeeshopmanagement.controller;
 
 import com.example.coffeeshopmanagement.database.JDBCConnect;
+import com.example.coffeeshopmanagement.model.entity.Customer;
+import com.example.coffeeshopmanagement.model.entity.Order;
 import com.example.coffeeshopmanagement.model.entity.OrderItem;
 import com.example.coffeeshopmanagement.model.entity.Product;
 import javafx.fxml.FXML;
@@ -35,6 +37,7 @@ public class ProductItemController implements Initializable {
     private Spinner<Integer> quantity;
 
     private Product products;
+    private Order order = new Order();
     private OrderItem orderItem = new OrderItem();
 
     private Image image;
@@ -75,7 +78,7 @@ public class ProductItemController implements Initializable {
         qty = quantity.getValue();
 
         String checkAvailable = "SELECT availability FROM product WHERE product_id = ?";
-        String insertData = "INSERT INTO order_item(order_item_id, order_id, product_id, quantity, item_price, discount, subtotal) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String insertData = "INSERT INTO orders(order_id, customer_id, order_date, total_amount, payment_method) VALUES (?, ?, ?, ?, ?)";
         String updateProductQuantity = "UPDATE product SET quantity = quantity - ? WHERE product_id = ?";
         String selectStock = "SELECT quantity_in_stock FROM inventory WHERE product_id = ?";
 
@@ -114,22 +117,21 @@ public class ProductItemController implements Initializable {
                     return;
                 }
             }
+            Customer customer = new Customer();
             Product product = new Product();
             product.setPrice(products.getPrice()); // Thay thế 10.0 bằng giá trị thực tế của sản phẩm
 
             // Gán đối tượng Product cho OrderItem
-            orderItem.setProduct(product);
+            order.setCustomer(customer);
             // Tạo và thêm order item
 //            if (orderItem.getProduct() != null) {
             insertStatement = connection.prepareStatement(insertData);
-            insertStatement.setInt(1, orderItem.getOrderItemId());
-            insertStatement.setInt(2, showProductController.customerID()); // Sử dụng customer ID đã lấy ở trước đó
-            insertStatement.setInt(3, products.getProductId());
-            insertStatement.setInt(4, qty);
-            insertStatement.setDouble(5, orderItem.getProduct().getPrice());
-            insertStatement.setDouble(6, orderItem.getDiscount());
+            insertStatement.setInt(1, order.getOrderId());
+            insertStatement.setInt(2,showProductController.customerID()); // Sử dụng customer ID đã lấy ở trước đó
+            insertStatement.setString(3, String.valueOf(order.getOrderDate()));
+            insertStatement.setString(4, order.getPaymentMethod());
             double subtotal = orderItem.getItemPrice() * qty - orderItem.getDiscount();
-            insertStatement.setDouble(7, subtotal);
+            insertStatement.setDouble(5, subtotal);
             insertStatement.executeUpdate();
 
 //            } else {
