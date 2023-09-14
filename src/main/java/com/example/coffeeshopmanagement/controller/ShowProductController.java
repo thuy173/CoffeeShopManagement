@@ -164,6 +164,28 @@ public class ShowProductController implements Initializable {
 
         return cID;
     }
+    private double totalP;
+    public void menuGetTotal() {
+        customerID();
+        String total = "SELECT SUM(price) FROM customer WHERE customer_id = " + cID;
+
+        Connection connection = jdbcConnect.getJDBCConnection();
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(total);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                totalP = resultSet.getDouble("SUM(price)");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
