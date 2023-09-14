@@ -160,7 +160,7 @@ public class ProductItemController implements Initializable {
                             + "(customer_id, product_id, prod_name, type, quantity, price, date, image, em_username) "
                             + "VALUES(?,?,?,?,?,?,?,?,?)";
                     preparedStatement = connection.prepareStatement(insertData);
-                    preparedStatement.setString(1, String.valueOf());
+                    preparedStatement.setString(1, String.valueOf(data.cID));
                     preparedStatement.setString(2, String.valueOf(productID));
                     preparedStatement.setString(3, productNameLabel.getText());
                     preparedStatement.setString(4, type);
