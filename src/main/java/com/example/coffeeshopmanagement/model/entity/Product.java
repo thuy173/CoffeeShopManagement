@@ -19,7 +19,8 @@ public class Product {
     private String ingredients;
     private boolean availability;
 
-    public Product(String productName,double price, String image){
+    public Product(int productId,String productName,double price, String image){
+        this.productId = productId;
         this.productName = productName;
         this.price = price;
         this.image = image;

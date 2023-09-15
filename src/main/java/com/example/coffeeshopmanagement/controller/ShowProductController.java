@@ -80,7 +80,8 @@ public class ShowProductController implements Initializable {
             ResultSet resultSet = preparedStatement.executeQuery();
             Product pro;
             while (resultSet.next()) {
-                pro = new Product(resultSet.getString("product_name"),
+                pro = new Product(resultSet.getInt("product_id"),
+                        resultSet.getString("product_name"),
                         resultSet.getDouble("price"),
                         resultSet.getString("image"));
                 listData.add(pro);
