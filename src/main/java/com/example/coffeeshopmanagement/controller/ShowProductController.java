@@ -72,8 +72,7 @@ public class ShowProductController implements Initializable {
         String sql = "SELECT * FROM product WHERE availability = true";
 
         ObservableList<Product> listData = FXCollections.observableArrayList();
-
-
+        
         Connection connection = jdbcConnect.getJDBCConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
