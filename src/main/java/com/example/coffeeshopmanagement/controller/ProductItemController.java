@@ -17,6 +17,8 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProductItemController implements Initializable {
@@ -38,6 +40,8 @@ public class ProductItemController implements Initializable {
 
     @FXML
     private Spinner<Integer> prod_spinner;
+    @FXML
+    private TextField productIDtext;
 
     private Product products;
     private Order order = new Order();
@@ -51,6 +55,8 @@ public class ProductItemController implements Initializable {
     private String type;
     private String prod_image;
     private String description;
+
+    private Integer product_quantity;
 
     private SpinnerValueFactory<Integer> spin;
 
@@ -68,6 +74,7 @@ public class ProductItemController implements Initializable {
     public void setData(Product product) {
         this.products = product;
 
+        product_quantity = product.getQuantity();
         prod_image = product.getImage();
         type = product.getCategory();
         productID = product.getProductId();
@@ -84,7 +91,7 @@ public class ProductItemController implements Initializable {
         pr = product.getPrice();
     }
 
-    private int qty;
+    private int qty = 0;
 
     public void setQuantity() {
         spin = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0);
@@ -95,26 +102,36 @@ public class ProductItemController implements Initializable {
     private double totalP;
     private double pr;
 
+
     public void addBtn() {
 
         ShowProductController showProductController = new ShowProductController();
         showProductController.customerID();
+        Product product = new Product();
+
 
         qty = prod_spinner.getValue();
-        String check = " ";
+        data d = new data();
+        d.cID = 0;
+        int check = 0;
         String checkAvailable = "SELECT availability FROM product WHERE product_id = '" +
                 productID + "'";
         connection = jdbcConnect.getJDBCConnection();
 
         try {
             int checkstck = 0;
-            String checkStock = "SELECT quantity FROM product WHERE product_id = '" +
-                    productID + "'";
+//            String checkStock = "SELECT quantity FROM product WHERE product_id = '" +
+//                    productID + "'";
+            String checkStock = "SELECT quantity FROM product WHERE product_id = ?";
+
             preparedStatement = connection.prepareStatement(checkStock);
+            preparedStatement.setInt(1,data.id);
             resultSet = preparedStatement.executeQuery();
 
+            System.out.println("ID  "+ productID);
             if (resultSet.next()) {
                 checkstck = resultSet.getInt("quantity");
+                System.out.println("quantity   "+ checkstck);
             }
 
             if (checkstck == 0) {
@@ -135,11 +152,11 @@ public class ProductItemController implements Initializable {
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                check = resultSet.getString("availability");
+                check = resultSet.getInt("availability");
             }
+            System.out.println("status:  "+checkstck);
 
-
-            if (check.equals("true") || qty == 0) {
+            if (check == 0 && qty == 0) {
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
@@ -147,7 +164,7 @@ public class ProductItemController implements Initializable {
                 alert.showAndWait();
             } else {
 
-                if (checkstck > qty) {
+                if (checkstck < qty) {
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error Message");
                     alert.setHeaderText(null);
@@ -160,7 +177,7 @@ public class ProductItemController implements Initializable {
                             + "(customer_id, product_id, prod_name, type, quantity, price, date, image, em_username) "
                             + "VALUES(?,?,?,?,?,?,?,?,?)";
                     preparedStatement = connection.prepareStatement(insertData);
-                    preparedStatement.setString(1, String.valueOf(data.cID));
+                    preparedStatement.setInt(1, d.cID);
                     preparedStatement.setString(2, String.valueOf(productID));
                     preparedStatement.setString(3, productNameLabel.getText());
                     preparedStatement.setString(4, type);
@@ -187,13 +204,13 @@ public class ProductItemController implements Initializable {
                     System.out.println("Date: " + productDate);
                     System.out.println("Image: " + prod_image);
 
-                    String updateStock = "UPDATE product SET prod_name = '"
-                            + productNameLabel.getText() + "', type = '"
-                            + type + "', stock = " + upStock + ", price = " + pr
-                            + ", status = '"
-                            + check + "', image = '"
-                            + prod_image + "', date = '"
-                            + productDate + "' WHERE prod_id = '"
+                    String updateStock = "UPDATE product SET product_name = '"
+                            + productNameLabel.getText() + "', category = '"
+                            + type + "', quantity = " + upStock + ", price = " + pr
+                            + ", availability = '"
+                            + check + "', description = '"
+                            + description + "', ingredients = '"
+                            + products.getIngredients() + "' WHERE product_id = '"
                             + productID + "'";
 
                     preparedStatement = connection.prepareStatement(updateStock);
