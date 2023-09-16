@@ -18,16 +18,16 @@ public class JDBCConnect {
             String username = properties.getProperty("USERNAME");
             String password = properties.getProperty("PASSWORD");
 
-            System.out.println(hostname);
+//            System.out.println(hostname);
             String connectionUrl = "jdbc:mysql://" + hostname
                     + ":" + port + "/"
                     + dbname;
-            System.out.println(connectionUrl);
+//            System.out.println(connectionUrl);
 
             try {
                 // Kết nối tới cơ sở dữ liệu
                 connection = DriverManager.getConnection(connectionUrl, username, password);
-                System.out.println("MySQL JDBC Driver Registered!");
+//                System.out.println("MySQL JDBC Driver Registered!");
             } catch (SQLException e) {
                 System.out.println("Connection Failed! Check output console");
                 e.printStackTrace();

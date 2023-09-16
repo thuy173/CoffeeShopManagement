@@ -123,8 +123,6 @@ public class ProductItemController implements Initializable {
 
         try {
             int checkstck = 0;
-//            String checkStock = "SELECT quantity FROM product WHERE product_id = '" +
-//                    productID + "'";
             String checkStock = "SELECT quantity FROM product WHERE product_id = ?";
             preparedStatement = connection.prepareStatement(checkStock);
             preparedStatement.setInt(1,productID);
@@ -132,7 +130,7 @@ public class ProductItemController implements Initializable {
 
             if (resultSet.next()) {
                 checkstck = resultSet.getInt("quantity");
-                System.out.println("quantity   "+ checkstck);
+//                System.out.println("quantity   "+ checkstck);
             }
 
             if (checkstck == 0) {
@@ -155,7 +153,7 @@ public class ProductItemController implements Initializable {
             if (resultSet.next()) {
                 check = resultSet.getInt("availability");
             }
-            System.out.println("status:  "+checkstck);
+//            System.out.println("status:  "+checkstck);
 
             if (check == 0 && qty == 0) {
                 alert = new Alert(Alert.AlertType.ERROR);
@@ -195,15 +193,15 @@ public class ProductItemController implements Initializable {
                     preparedStatement.setString(7, formattedDateTime);
 
                     preparedStatement.setString(8, prod_image);
-                    preparedStatement.setString(9, data.username);
+                    preparedStatement.setString(9, d.username);
 
                     preparedStatement.executeUpdate();
 
                     int upStock = checkstck - qty;
 
 
-                    System.out.println("Date: " + productDate);
-                    System.out.println("Image: " + prod_image);
+//                    System.out.println("Date: " + productDate);
+//                    System.out.println("Image: " + prod_image);
 
                     String updateStock = "UPDATE product SET product_name = '"
                             + productNameLabel.getText() + "', quantity = '"
@@ -220,6 +218,7 @@ public class ProductItemController implements Initializable {
                     alert.setHeaderText(null);
                     alert.setContentText("Successfully Added!");
                     alert.showAndWait();
+
 
                     showProductController.menuGetTotal();
                 }
@@ -240,6 +239,6 @@ public class ProductItemController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setQuantity();
-//        setID();
+
     }
 }

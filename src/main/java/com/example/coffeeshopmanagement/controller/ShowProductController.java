@@ -9,6 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -19,7 +21,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
+import java.time.LocalDate;
+import java.util.*;
 
 public class ShowProductController implements Initializable {
 
@@ -48,7 +51,7 @@ public class ShowProductController implements Initializable {
     private TableColumn<Product, Integer> quantityColum;
 
     @FXML
-    private ComboBox<Integer> quantityInput;
+    private TextField quantityInput;
 
     @FXML
     private TextField totalTextField;
@@ -72,7 +75,7 @@ public class ShowProductController implements Initializable {
         String sql = "SELECT * FROM product WHERE availability = true";
 
         ObservableList<Product> listData = FXCollections.observableArrayList();
-        
+
         Connection connection = jdbcConnect.getJDBCConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -94,7 +97,7 @@ public class ShowProductController implements Initializable {
 
     private ProductItemController productItemController;
 
-    public void menuDisplay() {
+    public void menuDisplayCard() {
         cartList.clear();
         cartList.addAll(menuGetData());
 
@@ -128,43 +131,90 @@ public class ShowProductController implements Initializable {
         }
     }
 
-    private int cID;
+    public ObservableList<Product> menuGetOrder() {
+        customerID();
+        ObservableList<Product> listData = FXCollections.observableArrayList();
+        String sql = "SELECT c.customer_id, c.prod_name, c.quantity, p.price " +
+                "FROM customer c " +
+                "INNER JOIN product p ON c.product_id = p.product_id " +
+                "WHERE c.customer_id = " + cID;
 
-    public int customerID() {
-        cID = 0;
-
-        String sql = "SELECT MAX(customer_id) FROM customer";
         Connection connection = jdbcConnect.getJDBCConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
-                cID = resultSet.getInt("MAX(customer_id)");
+            // Create an order
+            // You should replace these values with appropriate data for your order
+            int customerId = cID; // Assuming you have the customer ID
+            LocalDate orderDate = LocalDate.now(); // Assuming you want the current date
+            double totalAmount = 0.0; // Calculate the total amount based on products
+            String paymentMethod = "Credit Card"; // Replace with actual payment method
+
+            // Insert the order into the "orders" table
+            String insertOrderSql = "INSERT INTO orders (customer_id, order_date, total_amount, payment_method) VALUES (?, ?, ?, ?)";
+            PreparedStatement insertOrderStatement = connection.prepareStatement(insertOrderSql);
+            insertOrderStatement.setInt(1, customerId);
+            insertOrderStatement.setDate(2, java.sql.Date.valueOf(orderDate));
+            insertOrderStatement.setDouble(3, totalAmount);
+            insertOrderStatement.setString(4, paymentMethod);
+            insertOrderStatement.executeUpdate();
+
+            Product product;
+            while (resultSet.next()) {
+                product = new Product(resultSet.getInt("customer_id"),
+                        resultSet.getString("prod_name"),
+                        resultSet.getInt("quantity"),
+                        resultSet.getDouble("price"));
+                listData.addAll(product);
+
+                // Insert product information into the "order_item" table
+//                String insertOrderItemSql = "INSERT INTO order_item (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
+//                PreparedStatement insertOrderItemStatement = connection.prepareStatement(insertOrderItemSql);
+//                insertOrderItemStatement.setInt(1, /* Get the order ID of the newly inserted order */);
+//                insertOrderItemStatement.setInt(2, resultSet.getInt("customer_id")); // Assuming this is the product ID
+//                insertOrderItemStatement.setInt(3, resultSet.getInt("quantity"));
+//                insertOrderItemStatement.setDouble(4, resultSet.getDouble("price"));
+//                insertOrderItemStatement.executeUpdate();
             }
 
-            String checkCID = "SELECT MAX(customer_id) FROM receipt";
-            PreparedStatement preparedStatement1 = connection.prepareStatement(checkCID);
-            ResultSet resultSet1 = preparedStatement1.executeQuery();
-
-            int checkID = 0;
-            if(resultSet1.next()){
-                checkID = resultSet1.getInt("MAX(customer_id)");
-            }
-
-            if(cID == 0 ){
-                cID +=1;
-            }else if(cID == checkID){
-                cID +=1;
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return cID;
+        return listData;
     }
+
+
+
+    private ObservableList<Product> menuOrderListData;
+
+    public void menuShowOrderData() {
+        menuOrderListData = menuGetOrder();
+
+        productNameColum.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        quantityColum.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        priceColum.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+//        menu_tableview.setItems(cartList);
+        menu_tableview.setItems(FXCollections.observableArrayList(menuOrderListData));
+    }
+
+    private int getid;
+
+    @FXML
+    void menuSelectOrder(MouseEvent event) {
+        Product product = menu_tableview.getSelectionModel().getSelectedItem();
+        int num = menu_tableview.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+//        getid = product.getProductId();
+
+    }
+
     private double totalP;
+
     public void menuGetTotal() {
         customerID();
         String total = "SELECT SUM(price) FROM customer WHERE customer_id = " + cID;
@@ -186,9 +236,132 @@ public class ShowProductController implements Initializable {
 
     }
 
+    public void menuDisplayTotal(){
+        menuGetTotal();
+        totalTextField.setText("$" + totalP);
+    }
+
+    private double amount;
+    private double change;
+
+    public void menuAmount(){
+        menuGetTotal();
+        if(quantityInput.getText().isEmpty() || totalP == 0){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid :3");
+            alert.showAndWait();
+        }else {
+            amount = Double.parseDouble(quantityInput.getText());
+           
+        }
+
+    }
+    public void menuPayBtn(){
+        if(totalP ==0){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please choose your order first!");
+            alert.showAndWait();
+        }else{
+            menuGetTotal();
+            String insertPay = "INSERT INTO receipt(customer_id, receipt_date, total_amount) VALUES (?, ?, ?)";
+
+            Connection connection = jdbcConnect.getJDBCConnection();
+            try{
+
+                if(amount == 0){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Messaged");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Something wrong :3");
+                    alert.showAndWait();
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Are you sure?");
+                    Optional<ButtonType> option = alert.showAndWait();
+                    if(option.get().equals(ButtonType.OK)){
+                        customerID();
+                        menuGetTotal();
+                        PreparedStatement preparedStatement = connection.prepareStatement(insertPay);
+                        preparedStatement.setInt(1, cID);
+                        preparedStatement.setDouble(2, totalP);
+
+                        Date date = new Date();
+                        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+                        preparedStatement.setString(3, String.valueOf(sqlDate));
+                        preparedStatement.executeUpdate();
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Infomation Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Successful.");
+                        alert.showAndWait();
+                        menuShowOrderData();
+
+                    }
+                    else {
+                        alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Infomation Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Cancelled.");
+                        alert.showAndWait();
+                    }
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private int cID;
+
+    public int customerID() {
+        cID = 0;
+
+        String sql = "SELECT MAX(customer_id) FROM customer";
+        Connection connection = jdbcConnect.getJDBCConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                cID = resultSet.getInt("MAX(customer_id)");
+            }
+
+            String checkCID = "SELECT MAX(customer_id) FROM receipt";
+            PreparedStatement preparedStatement1 = connection.prepareStatement(checkCID);
+            ResultSet resultSet1 = preparedStatement1.executeQuery();
+
+            int checkID = 0;
+            if (resultSet1.next()) {
+                checkID = resultSet1.getInt("MAX(customer_id)");
+            }
+
+            if (cID == 0) {
+                cID += 1;
+            } else if (cID == checkID) {
+                cID += 1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return cID;
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        menuDisplay();
+        menuDisplayCard();
+        menuGetOrder();
+
+        menuShowOrderData();
+        menuDisplayTotal();
     }
 }

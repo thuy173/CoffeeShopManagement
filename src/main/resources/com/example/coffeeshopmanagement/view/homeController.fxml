@@ -32,9 +32,9 @@
                   </Button>
                   <Button fx:id="showProduct_controller" layoutX="70.0" layoutY="30.0" mnemonicParsing="false" onMouseClicked="#toOder" prefHeight="75.0" prefWidth="183.333333333" styleClass="menu-btn-home" stylesheets="@../css/homeController.css" text="Order">
                      <graphic>
-                        <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="49.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../image/coffee-cup.png" />
+                              <Image url="@../image/beans.png" />
                            </image>
                         </ImageView>
                      </graphic>
