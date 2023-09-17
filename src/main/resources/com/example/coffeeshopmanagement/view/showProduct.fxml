@@ -28,15 +28,6 @@
                <children>
                   <HBox prefHeight="80.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="45.0" styleClass="transparent" stylesheets="@../css/showProduct.css">
-                           <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../image/arrow-left.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
                         <Label text="Coffee milk" textFill="#624128">
                            <font>
                               <Font name="Berlin Sans FB" size="38.0" />
@@ -71,7 +62,7 @@
                   <Pane prefHeight="20.0" prefWidth="320.0" VBox.vgrow="ALWAYS" />
                   <VBox alignment="CENTER" prefHeight="427.0" prefWidth="0.0" stylesheets="@../css/showProduct.css">
                      <VBox.margin>
-                        <Insets bottom="6.0" left="20.0" right="20.0" />
+                        <Insets bottom="6.0" left="15.0" right="15.0" />
                      </VBox.margin>
                      <children>
                         <TableView fx:id="menu_tableview" onMouseClicked="#menuSelectOrder" prefHeight="239.0" prefWidth="259.0">
@@ -177,6 +168,18 @@
                            <font>
                               <Font name="Berlin Sans FB" size="14.0" />
                            </font>
+                        </Button>
+                        <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#close" prefHeight="28.0" prefWidth="22.0" styleClass="close" stylesheets="@../css/homeController.css">
+                           <graphic>
+                              <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/close%20(3).png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <HBox.margin>
+                              <Insets right="1.0" top="1.0" />
+                           </HBox.margin>
                         </Button>
                      </children>
                   </HBox>

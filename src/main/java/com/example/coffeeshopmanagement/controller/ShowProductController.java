@@ -5,6 +5,7 @@ import com.example.coffeeshopmanagement.model.entity.Customer;
 import com.example.coffeeshopmanagement.model.entity.Product;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,7 +27,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class ShowProductController implements Initializable {
-
+    @FXML
+    private Button closeBtn;
     @FXML
     private AnchorPane mainOrder;
 
@@ -346,7 +348,25 @@ public class ShowProductController implements Initializable {
 
         return cID;
     }
+    @FXML
+    void close(ActionEvent event) {
+        Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationDialog.setTitle("Confirmation");
+        confirmationDialog.setHeaderText("Are you sure you want to CLOSE?");
+        confirmationDialog.setContentText("Press OK to close or Cancel.");
 
+        // Show the dialog and wait for a result
+        ButtonType result = confirmationDialog.showAndWait().orElse(ButtonType.CANCEL);
+
+        // If the user clicks OK, proceed with the logout
+        if (result == ButtonType.OK) {
+            // Close the current stage
+            stage = (Stage) closeBtn.getScene().getWindow();
+            stage.close();
+
+        }
+
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -18,7 +18,7 @@
                   <Font name="Berlin Sans FB" size="27.0" />
                </font>
             </Label>
-            <Button fx:id="closeBtn" layoutX="1032.0" layoutY="12.0" mnemonicParsing="false" onAction="#close" styleClass="close" stylesheets="@../css/homeController.css" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
+            <Button fx:id="closeBtn" layoutX="1032.0" layoutY="12.0" mnemonicParsing="false" onAction="#close" prefHeight="22.0" prefWidth="25.0" styleClass="close" stylesheets="@../css/homeController.css" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
                <graphic>
                   <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                      <image>
