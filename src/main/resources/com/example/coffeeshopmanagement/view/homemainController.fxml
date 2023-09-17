@@ -73,7 +73,7 @@
          <children>
             <AnchorPane prefHeight="216.0" prefWidth="520.0" style="-fx-background-radius: 30;" styleClass="right-bar" stylesheets="@../css/showProduct.css">
                <children>
-                  <Label layoutX="216.0" layoutY="23.0" prefHeight="30.0" prefWidth="188.0" text="Total products">
+                  <Label layoutX="216.0" layoutY="23.0" prefHeight="30.0" prefWidth="241.0" text="Total products sold">
                      <font>
                         <Font name="Berlin Sans FB" size="26.0" />
                      </font>
@@ -91,12 +91,12 @@
             </AnchorPane>
             <AnchorPane prefHeight="216.0" prefWidth="520.0" style="-fx-background-radius: 30;" styleClass="right-bar" stylesheets="@../css/showProduct.css">
                <children>
-                  <Label layoutX="223.0" layoutY="23.0" prefHeight="30.0" prefWidth="188.0" text="Today's income">
+                  <Label layoutX="223.0" layoutY="23.0" prefHeight="30.0" prefWidth="188.0" text="Month income">
                      <font>
                         <Font name="Berlin Sans FB" size="26.0" />
                      </font>
                   </Label>
-                  <Label layoutX="223.0" layoutY="75.0" prefHeight="59.0" prefWidth="292.0" text="\$0.0">
+                  <Label fx:id="income_month" layoutX="223.0" layoutY="75.0" prefHeight="59.0" prefWidth="292.0" text="\$0.0">
                      <font>
                         <Font name="Berlin Sans FB" size="53.0" />
                      </font>

@@ -30,7 +30,7 @@
                      <children>
                         <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="45.0" styleClass="transparent" stylesheets="@../css/showProduct.css">
                            <graphic>
-                              <ImageView fitHeight="31.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../image/arrow-left.png" />
                                  </image>
@@ -69,16 +69,16 @@
                      </styleClass>
                   </HBox>
                   <Pane prefHeight="20.0" prefWidth="320.0" VBox.vgrow="ALWAYS" />
-                  <VBox alignment="CENTER" prefHeight="427.0" prefWidth="260.0" styleClass="coffee-cart" stylesheets="@../css/showProduct.css">
+                  <VBox alignment="CENTER" prefHeight="427.0" prefWidth="0.0" stylesheets="@../css/showProduct.css">
                      <VBox.margin>
-                        <Insets bottom="6.0" left="30.0" right="30.0" />
+                        <Insets bottom="6.0" left="20.0" right="20.0" />
                      </VBox.margin>
                      <children>
-                        <TableView fx:id="menu_tableview" onMouseClicked="#menuSelectOrder" prefHeight="214.0" prefWidth="247.0">
+                        <TableView fx:id="menu_tableview" onMouseClicked="#menuSelectOrder" prefHeight="239.0" prefWidth="259.0">
                           <columns>
                             <TableColumn fx:id="productNameColum" prefWidth="120.66665077209473" text="Name" />
                             <TableColumn fx:id="quantityColum" prefWidth="60.0" text="SL" />
-                              <TableColumn fx:id="priceColum" prefWidth="80.00001525878906" text="Price ($)" />
+                              <TableColumn fx:id="priceColum" prefWidth="96.66670227050781" text="Price ($)" />
                           </columns>
                         </TableView>
                         <HBox layoutX="10.0" layoutY="53.0" prefHeight="39.0" prefWidth="260.0">

@@ -14,6 +14,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -33,7 +34,8 @@ public class HomeMainController implements Initializable {
 
     @FXML
     private Label total_product;
-
+    @FXML
+    private Label income_month;
 
     public HomeMainController() {
         this.jdbcConnect = new JDBCConnect();
@@ -64,7 +66,7 @@ public class HomeMainController implements Initializable {
     }
 
     public void displayTotalCustomer(){
-        String sql = " SELECT COUNT(customer_id) FROM customer";
+        String sql = " SELECT COUNT(customer_id) FROM receipt";
         Connection connection = jdbcConnect.getJDBCConnection();
 
         try{
@@ -75,7 +77,7 @@ public class HomeMainController implements Initializable {
 
                 numCustomer = resultSet.getInt("COUNT(customer_id)");
             }
-            total_customer.setText(numCustomer + "customer");
+            total_customer.setText(numCustomer + " customer");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -100,8 +102,31 @@ public class HomeMainController implements Initializable {
             e.printStackTrace();
         }
     }
+    public void displayTotalIncomeForCurrentMonth() {
+        Connection connection = jdbcConnect.getJDBCConnection();
+        try {
+            double income = 0;
+
+            // Get the current year and month
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH) + 1; // Month is zero-based, so we add 1
+
+            String sql = "SELECT SUM(total_amount) FROM receipt WHERE YEAR(receipt_date) = ? AND MONTH(receipt_date) = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, year);
+            preparedStatement.setInt(2, month);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                income = resultSet.getDouble(1); // You can use the index 1 to get the first column in the result set.
+            }
+            income_month.setText("$" + income);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public void displayTotalProduct(){
-        String sql = "SELECT SUM(quantity) FROM product WHERE availability = 1";
+        String sql = "SELECT SUM(quantity) FROM customer";
         Connection connection = jdbcConnect.getJDBCConnection();
         try {
             int quantity = 0 ;
@@ -110,7 +135,7 @@ public class HomeMainController implements Initializable {
             if(resultSet.next()){
                 quantity = resultSet.getInt("SUM(quantity)");
             }
-            total_product.setText(quantity + "product");
+            total_product.setText(quantity + " product");
 
         }catch (Exception e){
             e.printStackTrace();
@@ -121,5 +146,6 @@ public class HomeMainController implements Initializable {
         displayTotalCustomer();
         displayTotalIncome();
         displayTotalProduct();
+        displayTotalIncomeForCurrentMonth();
     }
 }
