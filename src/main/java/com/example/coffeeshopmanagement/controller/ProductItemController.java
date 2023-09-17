@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import java.net.URL;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class ProductItemController implements Initializable {
     private Product products;
     private Order order = new Order();
     private OrderItem orderItem = new OrderItem();
-    private Customer customer = new Customer();
+    private Customer customer;
 
     private Image image;
 
@@ -91,7 +92,12 @@ public class ProductItemController implements Initializable {
 
         pr = product.getPrice();
         productID = product.getProductId();
-
+    }
+    private int cusId;
+    public void setCusId(Customer customer){
+        this.customer = customer;
+        cusId = customer.getCustomerId();
+        System.out.println(cusId);
     }
 
     private int qty = 0;
@@ -106,6 +112,7 @@ public class ProductItemController implements Initializable {
     private double pr;
 
     private int productID;
+
     public void addBtn() {
 
         ShowProductController showProductController = new ShowProductController();
@@ -125,7 +132,7 @@ public class ProductItemController implements Initializable {
             int checkstck = 0;
             String checkStock = "SELECT quantity FROM product WHERE product_id = ?";
             preparedStatement = connection.prepareStatement(checkStock);
-            preparedStatement.setInt(1,productID);
+            preparedStatement.setInt(1, productID);
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
@@ -213,6 +220,32 @@ public class ProductItemController implements Initializable {
                     preparedStatement = connection.prepareStatement(updateStock);
                     preparedStatement.executeUpdate();
 
+
+//INSERT INTO TABLE ORDER
+
+                    String paymentMethod = "Credit Card"; // Replace with actual payment method
+
+//                    setCusId();
+                    // Insert the order into the "orders" table
+                    String insertOrderSql = "INSERT INTO orders (customer_id, order_date, total_amount, payment_method) VALUES (?, ?, ?, ?)";
+                    PreparedStatement insertOrderStatement = connection.prepareStatement(insertOrderSql);
+                    insertOrderStatement.setInt(1, cusId);
+                    System.out.println("cusID  " + cusId);
+                    double totall = (qty * pr);
+                    insertOrderStatement.setString(2, formattedDateTime);
+                    insertOrderStatement.setDouble(3, totall);
+                    insertOrderStatement.setString(4, paymentMethod);
+                    insertOrderStatement.executeUpdate();
+
+
+                    // Insert product information into the "order_item" table
+                    String insertOrderItemSql = "INSERT INTO order_item (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
+                    PreparedStatement insertOrderItemStatement = connection.prepareStatement(insertOrderItemSql);
+                    insertOrderItemStatement.setInt(1, productID /* Get the order ID of the newly inserted order */);
+                    insertOrderItemStatement.setInt(2, resultSet.getInt("customer_id")); // Assuming this is the product ID
+                    insertOrderItemStatement.setInt(3, resultSet.getInt("quantity"));
+                    insertOrderItemStatement.setDouble(4, resultSet.getDouble("price"));
+
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Message");
                     alert.setHeaderText(null);
@@ -233,7 +266,6 @@ public class ProductItemController implements Initializable {
             alert.showAndWait();
         }
     }
-
 
 
     @Override

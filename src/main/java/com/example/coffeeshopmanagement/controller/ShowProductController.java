@@ -1,6 +1,7 @@
 package com.example.coffeeshopmanagement.controller;
 
 import com.example.coffeeshopmanagement.database.JDBCConnect;
+import com.example.coffeeshopmanagement.model.entity.Customer;
 import com.example.coffeeshopmanagement.model.entity.Product;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -70,6 +71,7 @@ public class ShowProductController implements Initializable {
     }
 
     private ObservableList<Product> cartList = FXCollections.observableArrayList();
+    private ObservableList<Customer> customerList = FXCollections.observableArrayList();
 
     public ObservableList<Product> menuGetData() {
         String sql = "SELECT * FROM product WHERE availability = true";
@@ -130,6 +132,11 @@ public class ShowProductController implements Initializable {
 
         }
     }
+    public void displayOrder(){
+        for(int i = 0;i<customerList.size();i++){
+            productItemController.setCusId(customerList.get(i));
+        }
+    }
 
     public ObservableList<Product> menuGetOrder() {
         customerID();
@@ -144,22 +151,6 @@ public class ShowProductController implements Initializable {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            // Create an order
-            // You should replace these values with appropriate data for your order
-            int customerId = cID; // Assuming you have the customer ID
-            LocalDate orderDate = LocalDate.now(); // Assuming you want the current date
-            double totalAmount = 0.0; // Calculate the total amount based on products
-            String paymentMethod = "Credit Card"; // Replace with actual payment method
-
-            // Insert the order into the "orders" table
-            String insertOrderSql = "INSERT INTO orders (customer_id, order_date, total_amount, payment_method) VALUES (?, ?, ?, ?)";
-            PreparedStatement insertOrderStatement = connection.prepareStatement(insertOrderSql);
-            insertOrderStatement.setInt(1, customerId);
-            insertOrderStatement.setDate(2, java.sql.Date.valueOf(orderDate));
-            insertOrderStatement.setDouble(3, totalAmount);
-            insertOrderStatement.setString(4, paymentMethod);
-            insertOrderStatement.executeUpdate();
-
             Product product;
             while (resultSet.next()) {
                 product = new Product(resultSet.getInt("customer_id"),
@@ -167,22 +158,13 @@ public class ShowProductController implements Initializable {
                         resultSet.getInt("quantity"),
                         resultSet.getDouble("price"));
                 listData.addAll(product);
-
-                // Insert product information into the "order_item" table
-//                String insertOrderItemSql = "INSERT INTO order_item (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
-//                PreparedStatement insertOrderItemStatement = connection.prepareStatement(insertOrderItemSql);
-//                insertOrderItemStatement.setInt(1, /* Get the order ID of the newly inserted order */);
-//                insertOrderItemStatement.setInt(2, resultSet.getInt("customer_id")); // Assuming this is the product ID
-//                insertOrderItemStatement.setInt(3, resultSet.getInt("quantity"));
-//                insertOrderItemStatement.setDouble(4, resultSet.getDouble("price"));
-//                insertOrderItemStatement.executeUpdate();
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return listData;
     }
+
 
 
 
@@ -361,6 +343,7 @@ public class ShowProductController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         menuDisplayCard();
         menuGetOrder();
+        displayOrder();
 
         menuShowOrderData();
         menuDisplayTotal();
