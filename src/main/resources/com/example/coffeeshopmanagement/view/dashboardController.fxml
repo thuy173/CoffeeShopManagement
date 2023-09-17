@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.AreaChart?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.StackedAreaChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -33,12 +33,12 @@
                   <Font name="Berlin Sans FB" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#close" styleClass="logout-btn" stylesheets="@../css/homeController.css">
+            <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#close" prefHeight="23.0" prefWidth="27.0" styleClass="close" stylesheets="@../css/homeController.css">
                <HBox.margin>
                   <Insets left="18.0" right="1.0" top="1.0" />
                </HBox.margin>
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/close%20(3).png" />
                      </image>
@@ -54,7 +54,7 @@
                   <Insets left="15.0" />
                </HBox.margin>
                <children>
-                  <BarChart layoutX="10.0" layoutY="20.0" prefHeight="400.0" title="Monthly revenue">
+                  <BarChart fx:id="daily_revenue" layoutX="10.0" layoutY="20.0" prefHeight="400.0" title="Daily revenue">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -69,14 +69,14 @@
                   <Insets left="25.0" />
                </HBox.margin>
                <children>
-                  <StackedAreaChart layoutX="10.0" layoutY="20.0" prefHeight="400.0" title="Customer reviews">
+                  <AreaChart fx:id="customer_day" layoutX="20.0" layoutY="20.0" title="Number of customers per day">
                     <xAxis>
-                      <NumberAxis side="BOTTOM" />
+                      <CategoryAxis side="BOTTOM" />
                     </xAxis>
                     <yAxis>
                       <NumberAxis side="LEFT" />
                     </yAxis>
-                  </StackedAreaChart>
+                  </AreaChart>
                </children>
             </AnchorPane>
          </children>

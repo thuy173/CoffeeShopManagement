@@ -83,7 +83,11 @@
                         <Font name="Berlin Sans FB" size="53.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="148.0" fitWidth="188.0" layoutX="7.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="148.0" fitWidth="188.0" layoutX="7.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/coffee.png" />
+                     </image>
+                  </ImageView>
                </children>
                <HBox.margin>
                   <Insets bottom="10.0" left="20.0" top="10.0" />

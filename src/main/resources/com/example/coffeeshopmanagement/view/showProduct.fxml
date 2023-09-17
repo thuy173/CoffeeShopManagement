@@ -69,7 +69,7 @@
                           <columns>
                             <TableColumn fx:id="productNameColum" prefWidth="120.66665077209473" text="Name" />
                             <TableColumn fx:id="quantityColum" prefWidth="60.0" text="SL" />
-                              <TableColumn fx:id="priceColum" prefWidth="96.66670227050781" text="Price ($)" />
+                              <TableColumn fx:id="priceColum" prefWidth="106.66665649414062" text="Price ($)" />
                           </columns>
                         </TableView>
                         <HBox layoutX="10.0" layoutY="53.0" prefHeight="39.0" prefWidth="260.0">
