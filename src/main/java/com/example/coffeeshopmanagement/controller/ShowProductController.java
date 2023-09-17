@@ -132,7 +132,7 @@ public class ShowProductController implements Initializable {
 
         }
     }
-    public void displayOrder(){
+    public void displayCustomerOrder(){
         for(int i = 0;i<customerList.size();i++){
             productItemController.setCusId(customerList.get(i));
         }
@@ -191,7 +191,7 @@ public class ShowProductController implements Initializable {
         if ((num - 1) < -1) {
             return;
         }
-//        getid = product.getProductId();
+        getid = product.getProductId();
 
     }
 
@@ -279,13 +279,15 @@ public class ShowProductController implements Initializable {
 
                         preparedStatement.setString(3, String.valueOf(sqlDate));
                         preparedStatement.executeUpdate();
+
                         alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Infomation Message");
                         alert.setHeaderText(null);
                         alert.setContentText("Successful.");
                         alert.showAndWait();
-                        menuShowOrderData();
 
+                        menuShowOrderData();
+                        menuRestart();
                     }
                     else {
                         alert = new Alert(Alert.AlertType.WARNING);
@@ -299,6 +301,13 @@ public class ShowProductController implements Initializable {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void menuRestart(){
+        totalP = 0;
+        amount = 0;
+        totalTextField.setText("$0.0");
+        quantityInput.setText("0");
     }
 
     private int cID;
@@ -343,9 +352,10 @@ public class ShowProductController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         menuDisplayCard();
         menuGetOrder();
-        displayOrder();
-
         menuShowOrderData();
         menuDisplayTotal();
+
+        displayCustomerOrder();
+
     }
 }

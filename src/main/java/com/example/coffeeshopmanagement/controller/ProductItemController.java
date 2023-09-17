@@ -223,28 +223,28 @@ public class ProductItemController implements Initializable {
 
 //INSERT INTO TABLE ORDER
 
-                    String paymentMethod = "Credit Card"; // Replace with actual payment method
-
-//                    setCusId();
-                    // Insert the order into the "orders" table
-                    String insertOrderSql = "INSERT INTO orders (customer_id, order_date, total_amount, payment_method) VALUES (?, ?, ?, ?)";
-                    PreparedStatement insertOrderStatement = connection.prepareStatement(insertOrderSql);
-                    insertOrderStatement.setInt(1, cusId);
-                    System.out.println("cusID  " + cusId);
-                    double totall = (qty * pr);
-                    insertOrderStatement.setString(2, formattedDateTime);
-                    insertOrderStatement.setDouble(3, totall);
-                    insertOrderStatement.setString(4, paymentMethod);
-                    insertOrderStatement.executeUpdate();
-
-
-                    // Insert product information into the "order_item" table
-                    String insertOrderItemSql = "INSERT INTO order_item (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
-                    PreparedStatement insertOrderItemStatement = connection.prepareStatement(insertOrderItemSql);
-                    insertOrderItemStatement.setInt(1, productID /* Get the order ID of the newly inserted order */);
-                    insertOrderItemStatement.setInt(2, resultSet.getInt("customer_id")); // Assuming this is the product ID
-                    insertOrderItemStatement.setInt(3, resultSet.getInt("quantity"));
-                    insertOrderItemStatement.setDouble(4, resultSet.getDouble("price"));
+//                    String paymentMethod = "Credit Card"; // Replace with actual payment method
+//
+////                    setCusId();
+//                    // Insert the order into the "orders" table
+//                    String insertOrderSql = "INSERT INTO orders (customer_id, order_date, total_amount, payment_method) VALUES (?, ?, ?, ?)";
+//                    PreparedStatement insertOrderStatement = connection.prepareStatement(insertOrderSql);
+//                    insertOrderStatement.setInt(1, cusId);
+//                    System.out.println("cusID  " + cusId);
+//                    double totall = (qty * pr);
+//                    insertOrderStatement.setString(2, formattedDateTime);
+//                    insertOrderStatement.setDouble(3, totall);
+//                    insertOrderStatement.setString(4, paymentMethod);
+//                    insertOrderStatement.executeUpdate();
+//
+//
+//                    // Insert product information into the "order_item" table
+//                    String insertOrderItemSql = "INSERT INTO order_item (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
+//                    PreparedStatement insertOrderItemStatement = connection.prepareStatement(insertOrderItemSql);
+//                    insertOrderItemStatement.setInt(1, productID /* Get the order ID of the newly inserted order */);
+//                    insertOrderItemStatement.setInt(2, resultSet.getInt("customer_id")); // Assuming this is the product ID
+//                    insertOrderItemStatement.setInt(3, resultSet.getInt("quantity"));
+//                    insertOrderItemStatement.setDouble(4, resultSet.getDouble("price"));
 
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Message");
