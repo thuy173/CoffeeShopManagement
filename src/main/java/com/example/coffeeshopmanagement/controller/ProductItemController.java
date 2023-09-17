@@ -116,7 +116,7 @@ public class ProductItemController implements Initializable {
         qty = prod_spinner.getValue();
         data d = new data();
         d.cID = 0;
-        int check = 0;
+        String check = "";
         String checkAvailable = "SELECT availability FROM product WHERE product_id = '" +
                 productID + "'";
         connection = jdbcConnect.getJDBCConnection();
@@ -151,11 +151,11 @@ public class ProductItemController implements Initializable {
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                check = resultSet.getInt("availability");
+                check = resultSet.getString("availability");
             }
 //            System.out.println("status:  "+checkstck);
-
-            if (check == 0 && qty == 0) {
+//            if (check.equals("false") && qty == 0) {
+            if (qty == 0) {
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);

@@ -254,11 +254,12 @@ public class ShowProductController implements Initializable {
             alert.showAndWait();
         }else {
             amount = Double.parseDouble(quantityInput.getText());
-           
+
         }
 
     }
     public void menuPayBtn(){
+
         if(totalP ==0){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Message");
@@ -267,18 +268,18 @@ public class ShowProductController implements Initializable {
             alert.showAndWait();
         }else{
             menuGetTotal();
-            String insertPay = "INSERT INTO receipt(customer_id, receipt_date, total_amount) VALUES (?, ?, ?)";
+            String insertPay = "INSERT INTO receipt(customer_id, total_amount, receipt_date) VALUES (?, ?, ?)";
 
             Connection connection = jdbcConnect.getJDBCConnection();
             try{
 
-                if(amount == 0){
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Messaged");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Something wrong :3");
-                    alert.showAndWait();
-                }else{
+//                if(amount == 0){
+//                    Alert alert = new Alert(Alert.AlertType.ERROR);
+//                    alert.setTitle("Error Messaged");
+//                    alert.setHeaderText(null);
+//                    alert.setContentText("Something wrong :3");
+//                    alert.showAndWait();
+//                }else{
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Confirmation Message");
                     alert.setHeaderText(null);
@@ -311,7 +312,7 @@ public class ShowProductController implements Initializable {
                         alert.setContentText("Cancelled.");
                         alert.showAndWait();
                     }
-                }
+//                }
             }catch (Exception e){
                 e.printStackTrace();
             }
