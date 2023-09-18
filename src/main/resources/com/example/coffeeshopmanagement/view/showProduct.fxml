@@ -72,7 +72,7 @@
                               <TableColumn fx:id="priceColum" prefWidth="106.66665649414062" text="Price ($)" />
                           </columns>
                         </TableView>
-                        <HBox layoutX="10.0" layoutY="53.0" prefHeight="39.0" prefWidth="260.0">
+                        <HBox layoutX="10.0" layoutY="53.0" prefHeight="39.0" prefWidth="260.0" visible="false">
                            <children>
                               <Label alignment="TOP_LEFT" prefHeight="39.0" prefWidth="129.0" text="Quantity:">
                                  <font>

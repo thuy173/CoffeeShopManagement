@@ -65,7 +65,6 @@ public class HomeController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/coffeeshopmanagement/view/" + fxmlFileName));
             fxmlLoader.setController(controller);
             root = fxmlLoader.load();
-//            fullHomePage.setCenter(root);
 
         } catch (Exception e) {
             e.printStackTrace();
