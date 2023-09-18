@@ -9,3 +9,11 @@
 .sigup-btn{
     -fx-background-color: #AC8556;
 }
+
+.choice{
+    -fx-background-color: rgba(255,255,255,0.3);
+    -fx-background-radius: 30;
+}
+.errorLbl{
+     -fx-text-fill:#ff0000 ;
+}
