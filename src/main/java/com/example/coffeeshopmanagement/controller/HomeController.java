@@ -113,6 +113,16 @@ public class HomeController implements Initializable {
     }
 
     @FXML
+    void toWarehouse(MouseEvent event) {
+//        stageManager.loadEditProduct();
+//        stage.close();
+        EditProductController editProductController = new EditProductController();
+        loadScene("editProductController.fxml", editProductController);
+        activeButton = editProduct; // Update the active button
+        highlightActiveButton();
+    }
+
+    @FXML
     void close(ActionEvent event) {
 
         stage.close();
