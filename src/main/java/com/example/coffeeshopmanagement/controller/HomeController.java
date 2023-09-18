@@ -116,9 +116,18 @@ public class HomeController implements Initializable {
     void toWarehouse(MouseEvent event) {
 //        stageManager.loadEditProduct();
 //        stage.close();
-        EditProductController editProductController = new EditProductController();
-        loadScene("editProductController.fxml", editProductController);
-        activeButton = editProduct; // Update the active button
+        WarehouseController warehouseController = new WarehouseController();
+        loadScene("warehouseController.fxml", warehouseController);
+        activeButton = ware_controller; // Update the active button
+        highlightActiveButton();
+    }
+    @FXML
+    void toEmployee(MouseEvent event) {
+//        stageManager.loadEditProduct();
+//        stage.close();
+        EmployeeController employeeController = new EmployeeController();
+        loadScene("employeeController.fxml", employeeController);
+        activeButton = employee_controller; // Update the active button
         highlightActiveButton();
     }
 
