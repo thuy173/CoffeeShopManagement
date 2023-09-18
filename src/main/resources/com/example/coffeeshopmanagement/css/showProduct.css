@@ -21,13 +21,14 @@
     -fx-background-radius: 30;
 }
 .pay-btn{
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: #EAC696;
     -fx-background-radius: 100;
+    -fx-text-fill:#6C3428 ;
 }
 .pay-btn:hover{
     -fx-cursor: hand;
-    -fx-background-color:#F8F0E5;
-    -fx-text-fill:#624128 ;
+    -fx-background-color:#BA753C;
+    -fx-text-fill:#EBE4D1 ;
 }
 
 .menu-btn{
