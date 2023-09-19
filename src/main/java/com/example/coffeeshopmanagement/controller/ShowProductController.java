@@ -120,6 +120,12 @@ public class ShowProductController implements Initializable {
                 productItemController = load.getController();
                 productItemController.setData(cartList.get(i));
 
+// Lấy Tooltip từ productNameLabel trong controller khác
+                Tooltip tooltip = productItemController.productNameLabel.getTooltip();
+
+                // Đặt nội dung Tooltip thành tên sản phẩm
+                tooltip.setText(cartList.get(i).getProductName());
+
                 if (col == 3) {
                     col = 0;
                     row += 1;
