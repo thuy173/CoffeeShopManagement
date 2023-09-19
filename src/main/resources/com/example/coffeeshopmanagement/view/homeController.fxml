@@ -60,7 +60,7 @@
                         <Font name="Berlin Sans FB" size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="ware_controller" layoutX="629.0" layoutY="30.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="183.33333333" styleClass="menu-btn-home" stylesheets="@../css/homeController.css" text="Warehouse">
+                  <Button fx:id="ware_controller" layoutX="629.0" layoutY="30.0" mnemonicParsing="false" onMouseClicked="#toWarehouse" prefHeight="75.0" prefWidth="183.33333333" styleClass="menu-btn-home" stylesheets="@../css/homeController.css" text="Warehouse">
                      <graphic>
                         <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -75,7 +75,7 @@
                         <Font name="Berlin Sans FB" size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="employee_controller" layoutX="670.0" layoutY="10.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="183.3333333" styleClass="menu-btn-home" stylesheets="@../css/homeController.css" text="Employee">
+                  <Button fx:id="employee_controller" layoutX="670.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#toEmployee" prefHeight="75.0" prefWidth="183.3333333" styleClass="menu-btn-home" stylesheets="@../css/homeController.css" text="Employee">
                      <graphic>
                         <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
