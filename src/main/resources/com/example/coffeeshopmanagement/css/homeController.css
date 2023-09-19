@@ -34,3 +34,12 @@
 .close:hover{
     -fx-background-color: #BA753C;
 }
+.logout{
+    -fx-background-color: translate;
+    -fx-cursor: hand;
+}
+.logout:hover{
+    -fx-background-color: #DAC0A3;
+    -fx-text-fill:#65451F ;
+    -fx-background-radius: 45px;
+}

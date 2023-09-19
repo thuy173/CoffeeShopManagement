@@ -33,6 +33,21 @@
                   <Font name="Berlin Sans FB" size="14.0" />
                </font>
             </Label>
+            <Button fx:id="logout_btn" mnemonicParsing="false" onMouseClicked="#logOut" prefHeight="49.0" prefWidth="83.0" styleClass="logout" stylesheets="@../css/homeController.css" text="LogOut" textFill="#a88860">
+               <HBox.margin>
+                  <Insets left="15.0" />
+               </HBox.margin>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/power-off.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Berlin Sans FB" size="13.0" />
+               </font>
+            </Button>
             <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#close" prefHeight="23.0" prefWidth="27.0" styleClass="close" stylesheets="@../css/homeController.css">
                <HBox.margin>
                   <Insets left="18.0" right="1.0" top="1.0" />

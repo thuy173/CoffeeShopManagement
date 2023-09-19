@@ -14,11 +14,11 @@
 
 <AnchorPane fx:id="mainEditForm" prefHeight="524.6666666" prefWidth="1100.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane layoutX="29.0" layoutY="7.0" prefHeight="25.0" prefWidth="1100.0" styleClass="bgr-text-nav" stylesheets="@../css/showProduct.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane layoutX="29.0" layoutY="7.0" prefHeight="31.0" prefWidth="1100.0" styleClass="bgr-text-nav" stylesheets="@../css/showProduct.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="close" layoutX="1057.0" mnemonicParsing="false" onAction="#close" prefHeight="17.0" prefWidth="43.0" styleClass="close" stylesheets="@../css/showProduct.css">
+            <Button fx:id="close" layoutX="1057.0" mnemonicParsing="false" onAction="#close" prefHeight="23.0" prefWidth="27.0" styleClass="close" stylesheets="@../css/showProduct.css">
                <graphic>
-                  <ImageView fitHeight="17.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/close%20(3).png" />
                      </image>
@@ -28,27 +28,27 @@
          </children></Pane>
       <AnchorPane layoutX="10.0" layoutY="33.0" prefHeight="225.0" prefWidth="200.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
          <children>
-            <TableView fx:id="tableProduct" layoutX="53.0" layoutY="14.0" prefHeight="230.0" prefWidth="1080.0" stylesheets="@../css/showProduct.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="tableProduct" layoutX="53.0" layoutY="8.0" prefHeight="225.0" prefWidth="1080.0" stylesheets="@../css/showProduct.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
               <columns>
                 <TableColumn fx:id="idProduct" prefWidth="52.00000286102295" text="ID" />
                 <TableColumn fx:id="nameProduct" prefWidth="211.33331298828125" text="Product name" />
-                  <TableColumn fx:id="descriptionProduct" prefWidth="222.66668701171875" text="Description" />
-                  <TableColumn fx:id="categoryProduct" prefWidth="135.33331298828125" text="Category" />
+                  <TableColumn fx:id="descriptionProduct" prefWidth="244.00003051757812" text="Description" />
+                  <TableColumn fx:id="categoryProduct" prefWidth="114.66668701171875" text="Category" />
                   <TableColumn fx:id="priceProduct" prefWidth="137.33331298828125" text="Price" />
                   <TableColumn fx:id="ingredientsProduct" prefWidth="87.3333740234375" text="Ingredients" />
-                  <TableColumn fx:id="availabilityProduct" prefWidth="117.33331298828125" text="Availability" />
-                  <TableColumn fx:id="quantityProduct" prefWidth="112.666748046875" text="Quantity" />
-                  <TableColumn fx:id="imageColum" prefWidth="112.666748046875" text="Image" />
+                  <TableColumn fx:id="availabilityProduct" prefWidth="95.33331298828125" text="Availability" />
+                  <TableColumn fx:id="quantityProduct" prefWidth="135.3333740234375" text="Quantity" />
+                  <TableColumn fx:id="imageColum" prefWidth="112.666748046875" text="Image" visible="false" />
               </columns>
             </TableView>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="10.0" layoutY="269.0" prefHeight="260.0" prefWidth="200.0" styleClass="inputcoffee-cart" stylesheets="@../css/showProduct.css" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="260.0">
+      <AnchorPane layoutX="10.0" layoutY="265.0" prefHeight="255.0" prefWidth="1080.0" styleClass="inputcoffee-cart" stylesheets="@../css/showProduct.css" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="260.0">
          <children>
-            <Label layoutX="51.0" layoutY="20.0" text="ID" />
+            <Label layoutX="51.0" layoutY="20.0" text="ID" visible="false" />
             <Label layoutX="50.0" layoutY="100.0" text="Product name" />
             <Label layoutX="50.0" layoutY="153.0" text="Description" />
-            <TextField fx:id="idInput" layoutX="142.0" layoutY="16.0" />
+            <TextField fx:id="idInput" layoutX="142.0" layoutY="16.0" visible="false" />
             <TextField fx:id="nameInput" layoutX="142.0" layoutY="96.0" />
             <TextField fx:id="priceInput" layoutX="540.0" layoutY="96.0" promptText="\$0.0" />
             <TextArea fx:id="descriptionInput" layoutX="142.0" layoutY="144.0" prefHeight="112.0" prefWidth="256.0" />
