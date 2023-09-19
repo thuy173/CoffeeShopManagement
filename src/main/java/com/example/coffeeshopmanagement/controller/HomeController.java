@@ -69,22 +69,19 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if("customer".equals(userRole)){
-            dashboard_controller.setVisible(false);
-            home_controller.setVisible(false);
-            showProduct_controller.setVisible(true);
-            ware_controller.setVisible(false);
-            employee_controller.setVisible(false);
-            HomeMainController homeMainController = new HomeMainController();
-            loadScene("homemainController.fxml", homeMainController);
-            activeButton = home_controller;
-            highlightActiveButton();
-        }else{
-            HomeMainController homeMainController = new HomeMainController();
-            loadScene("homemainController.fxml", homeMainController);
-            activeButton = home_controller;
-            highlightActiveButton();
+        if ("admin".equals(userRole)) {
+
+            editProduct.setVisible(true);
+        } else{
+            
+            editProduct.setVisible(false);
         }
+
+
+            HomeMainController homeMainController = new HomeMainController();
+            loadScene("homemainController.fxml", homeMainController);
+            activeButton = home_controller;
+            highlightActiveButton();
 
 
     }
@@ -136,10 +133,14 @@ public class HomeController implements Initializable {
     void toEditProduct(MouseEvent event) {
 //        stageManager.loadEditProduct();
 //        stage.close();
-        EditProductController editProductController = new EditProductController();
-        loadScene("editProductController.fxml", editProductController);
-        activeButton = editProduct; // Update the active button
-        highlightActiveButton();
+        if ("admin".equals(userRole)) {
+            EditProductController editProductController = new EditProductController();
+            loadScene("editProductController.fxml", editProductController);
+            activeButton = editProduct; // Update the active button
+            highlightActiveButton();
+        } else {
+
+        }
     }
 
     @FXML
