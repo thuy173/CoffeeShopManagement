@@ -40,6 +40,14 @@ public class HomeController implements Initializable {
     private AccountType loginAccount;
 
     private Button activeButton;
+    private String userRole;
+    private LoginController loginController;
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }
+    public void setLoginController(LoginController loginController){
+        this.loginController = loginController;
+    }
     private JDBCConnect jdbcConnect;
 
     private Stage stage;
@@ -61,10 +69,24 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        HomeMainController homeMainController = new HomeMainController();
-        loadScene("homemainController.fxml", homeMainController);
-        activeButton = home_controller;
-        highlightActiveButton();
+        if("customer".equals(userRole)){
+            dashboard_controller.setVisible(false);
+            home_controller.setVisible(false);
+            showProduct_controller.setVisible(true);
+            ware_controller.setVisible(false);
+            employee_controller.setVisible(false);
+            HomeMainController homeMainController = new HomeMainController();
+            loadScene("homemainController.fxml", homeMainController);
+            activeButton = home_controller;
+            highlightActiveButton();
+        }else{
+            HomeMainController homeMainController = new HomeMainController();
+            loadScene("homemainController.fxml", homeMainController);
+            activeButton = home_controller;
+            highlightActiveButton();
+        }
+
+
     }
 
     public void loadScene(String fxmlFileName, Object controller) {

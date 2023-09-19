@@ -81,21 +81,23 @@ public class LoginController implements Initializable {
         String pass = password.getText();
         if (isValidCredentials(name, pass)) {
             data.usernameadmin = name;
-            // Tạo một Task để chờ 4 giây
+            String userRole = getUserRoleFromDatabase(username.getText()) ;
+
+            // Tạo một Task để chờ 2 giây
             Task<Void> waitTask = new Task<Void>() {
                 @Override
                 protected Void call() throws Exception {
-                    Thread.sleep(2000); // Đợi 5 giây
+                    Thread.sleep(2000); // Đợi 3 giây
                     return null;
                 }
             };
 
-            // Gán hành động khi Task hoàn thành (sau 4 giây)
+            // Gán hành động khi Task hoàn thành (sau 2 giây)
             waitTask.setOnSucceeded(eventTask -> {
 //                successAlert.showAndWait();
 //                stageManager.closeStage();
                 stage.close();
-//                stageManager.loadHomeStage(); // Load home page sau khi chờ 5 giây
+//                stageManager.loadHomeStage(); // Load home page sau khi chờ 3 giây
 //                HomeController homeController = new HomeController();
 //                homeController.loadScene("homeController.fxml",homeController);
                 try {
@@ -107,6 +109,10 @@ public class LoginController implements Initializable {
                     setCurrentStage(stagemain);
                     stage.initStyle(StageStyle.TRANSPARENT);
                     showStage();
+
+                    HomeController homeController = fxmlLoader.getController(); // Lấy tham chiếu đến HomeController từ FXMLLoader
+                    homeController.setLoginController(this);
+                    homeController.setUserRole(userRole);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -121,18 +127,11 @@ public class LoginController implements Initializable {
             alert.setContentText("Invalid credentials. Please try again.");
             alert.showAndWait();
         }
-        HomeController homeController = new HomeController();
 
-        if(homeController.getLoginAccount() == AccountType.CUSTOMER){
-//            homeController.toHome();
-        }else{
-//            homeController.toOder();
-        }
     }
 
     private boolean isValidCredentials(String username, String password) {
         boolean isValid = false;
-
         // Truy vấn cơ sở dữ liệu để kiểm tra cặp username và password
         try {
             Connection connection = jdbcConnect.getJDBCConnection();
@@ -142,7 +141,7 @@ public class LoginController implements Initializable {
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            isValid = resultSet.next(); // Kiểm tra xem có kết quả trả về từ cơ sở dữ liệu hay không
+          isValid = resultSet.next(); // Kiểm tra xem có kết quả trả về từ cơ sở dữ liệu hay không
 
             // Đóng các tài nguyên
             resultSet.close();
@@ -173,4 +172,47 @@ public class LoginController implements Initializable {
 
         }
     }
+    private String getUserRoleFromDatabase(String username) {
+        String userRole = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // Kết nối đến cơ sở dữ liệu
+            connection = jdbcConnect.getJDBCConnection();
+
+            // Truy vấn cơ sở dữ liệu để lấy vai trò dựa trên tên người dùng
+            String query = "SELECT role.name FROM admin INNER JOIN role ON admin.role_id = role.role_id WHERE admin.username = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+
+            // Nếu có kết quả trả về, lấy vai trò từ kết quả
+            if (resultSet.next()) {
+                userRole = resultSet.getString("name");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // Đảm bảo đóng tất cả các tài nguyên
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return userRole;
+    }
+
+
 }
