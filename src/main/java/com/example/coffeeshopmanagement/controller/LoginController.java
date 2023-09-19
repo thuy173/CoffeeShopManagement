@@ -79,9 +79,10 @@ public class LoginController implements Initializable {
     void handleLogin(ActionEvent event) {
         String name = username.getText();
         String pass = password.getText();
-        if (isValidCredentials(name, pass)) {
+        AccountType roleValue = choice_role.getValue();
+        if (isValidCredentials(name, pass,roleValue)) {
             data.usernameadmin = name;
-            String userRole = getUserRoleFromDatabase(username.getText()) ;
+            String userRole = getUserRoleFromDatabase(name) ;
 
             // Tạo một Task để chờ 2 giây
             Task<Void> waitTask = new Task<Void>() {
@@ -130,18 +131,26 @@ public class LoginController implements Initializable {
 
     }
 
-    private boolean isValidCredentials(String username, String password) {
+    private boolean isValidCredentials(String username, String password, AccountType role) {
         boolean isValid = false;
         // Truy vấn cơ sở dữ liệu để kiểm tra cặp username và password
         try {
             Connection connection = jdbcConnect.getJDBCConnection();
-            String query = "SELECT * FROM admin WHERE username = ? AND password = ?";
+            String query = "SELECT a.*, r.name AS user_role FROM admin a INNER JOIN role r ON a.role_id = r.role_id WHERE a.username = ? AND a.password = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-          isValid = resultSet.next(); // Kiểm tra xem có kết quả trả về từ cơ sở dữ liệu hay không
+            if (resultSet.next()) {
+                String userRole = resultSet.getString("user_role");
+                // Kiểm tra vai trò của người dùng
+                if (role == AccountType.ADMIN && "admin".equals(userRole)) {
+                    isValid = true;
+                } else if (role == AccountType.CUSTOMER && "customer".equals(userRole)) {
+                    isValid = true;
+                }
+            }
 
             // Đóng các tài nguyên
             resultSet.close();
@@ -153,6 +162,7 @@ public class LoginController implements Initializable {
 
         return isValid;
     }
+
 
     @FXML
     void close(ActionEvent event) {
