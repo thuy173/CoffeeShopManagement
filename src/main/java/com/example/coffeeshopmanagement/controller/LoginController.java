@@ -1,6 +1,7 @@
 package com.example.coffeeshopmanagement.controller;
 
 import com.example.coffeeshopmanagement.database.JDBCConnect;
+import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +22,9 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+
+    @FXML
+    private ChoiceBox<AccountType> choice_role;
     @FXML
     private Button close;
     @FXML
@@ -66,6 +70,9 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        choice_role.setItems(FXCollections.observableArrayList(AccountType.CUSTOMER,AccountType.ADMIN));
+        choice_role.setValue(new HomeController().getLoginAccount());
+        choice_role.valueProperty().addListener(observable -> new HomeController().setLoginAccount(choice_role.getValue()));
     }
 
     @FXML
@@ -113,6 +120,13 @@ public class LoginController implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("Invalid credentials. Please try again.");
             alert.showAndWait();
+        }
+        HomeController homeController = new HomeController();
+
+        if(homeController.getLoginAccount() == AccountType.CUSTOMER){
+//            homeController.toHome();
+        }else{
+//            homeController.toOder();
         }
     }
 

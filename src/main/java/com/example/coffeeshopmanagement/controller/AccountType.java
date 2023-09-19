@@ -1,2 +1,6 @@
-package com.example.coffeeshopmanagement.controller;public enum AccountType {
+package com.example.coffeeshopmanagement.controller;
+
+public enum AccountType {
+    ADMIN,
+    CUSTOMER
 }
