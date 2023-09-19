@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import lombok.Getter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,6 +36,8 @@ public class HomeController implements Initializable {
     private Button editProduct;
     @FXML
     private BorderPane fullHomePage;
+    @Getter
+    private AccountType loginAccount;
 
     private Button activeButton;
     private JDBCConnect jdbcConnect;
@@ -45,6 +48,11 @@ public class HomeController implements Initializable {
     public HomeController() {
         this.jdbcConnect = new JDBCConnect();
         this.stageManager = new StageManager();
+        this.loginAccount = AccountType.CUSTOMER;
+    }
+
+    public void setLoginAccount(AccountType loginAccount){
+        this.loginAccount = loginAccount;
     }
 
     public void setStage(Stage stage) {
