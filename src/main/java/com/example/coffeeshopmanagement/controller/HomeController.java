@@ -69,13 +69,13 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if ("admin".equals(userRole)) {
-
-            editProduct.setVisible(true);
-        } else{
-            
-            editProduct.setVisible(false);
-        }
+//        if ("admin".equals(userRole)) {
+//
+//            editProduct.setVisible(true);
+//        } else{
+//
+//            editProduct.setVisible(false);
+//        }
 
 
             HomeMainController homeMainController = new HomeMainController();
