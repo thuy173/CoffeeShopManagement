@@ -131,26 +131,30 @@ public class LoginController implements Initializable {
 
     }
 
+
+    // Hàm kiểm tra thông tin đăng nhập dựa trên vai trò
     private boolean isValidCredentials(String username, String password, AccountType role) {
         boolean isValid = false;
-        // Truy vấn cơ sở dữ liệu để kiểm tra cặp username và password
+
+        // Truy vấn cơ sở dữ liệu để kiểm tra cặp username và password dựa trên vai trò
         try {
             Connection connection = jdbcConnect.getJDBCConnection();
-            String query = "SELECT a.*, r.name AS user_role FROM admin a INNER JOIN role r ON a.role_id = r.role_id WHERE a.username = ? AND a.password = ?";
+            String query = "SELECT * FROM admin WHERE username = ? AND password = ?";
+
+            if (role == AccountType.ADMIN) {
+                // Nếu là admin, thực hiện kiểm tra cho admin
+                query += " AND role_id = 1"; // 1 là ID của vai trò admin trong bảng role
+            } else if (role == AccountType.CUSTOMER) {
+                // Nếu là customer, thực hiện kiểm tra cho customer
+                query += " AND role_id = 2"; // 2 là ID của vai trò customer trong bảng role
+            }
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
-                String userRole = resultSet.getString("user_role");
-                // Kiểm tra vai trò của người dùng
-                if (role == AccountType.ADMIN && "admin".equals(userRole)) {
-                    isValid = true;
-                } else if (role == AccountType.CUSTOMER && "customer".equals(userRole)) {
-                    isValid = true;
-                }
-            }
+            isValid = resultSet.next(); // Kiểm tra xem có kết quả trả về từ cơ sở dữ liệu hay không
 
             // Đóng các tài nguyên
             resultSet.close();
@@ -162,6 +166,39 @@ public class LoginController implements Initializable {
 
         return isValid;
     }
+
+
+//    private boolean isValidCredentials(String username, String password, AccountType role) {
+//        boolean isValid = false;
+//        // Truy vấn cơ sở dữ liệu để kiểm tra cặp username và password
+//        try {
+//            Connection connection = jdbcConnect.getJDBCConnection();
+//            String query = "SELECT a.*, r.name AS user_role FROM admin a INNER JOIN role r ON a.role_id = r.role_id WHERE a.username = ? AND a.password = ?";
+//            PreparedStatement preparedStatement = connection.prepareStatement(query);
+//            preparedStatement.setString(1, username);
+//            preparedStatement.setString(2, password);
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//
+//            if (resultSet.next()) {
+//                String userRole = resultSet.getString("user_role");
+//                // Kiểm tra vai trò của người dùng
+//                if (role == AccountType.ADMIN && "admin".equals(userRole)) {
+//                    isValid = true;
+//                } else if (role == AccountType.CUSTOMER && "customer".equals(userRole)) {
+//                    isValid = true;
+//                }
+//            }
+//
+//            // Đóng các tài nguyên
+//            resultSet.close();
+//            preparedStatement.close();
+//            connection.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return isValid;
+//    }
 
 
     @FXML
