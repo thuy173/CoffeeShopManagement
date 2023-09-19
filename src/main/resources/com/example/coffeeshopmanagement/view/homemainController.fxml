@@ -141,12 +141,7 @@
                         <Image url="@../image/coffee-pack.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="421.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true" rotate="54.5">
-                     <image>
-                        <Image url="@../image/coffee-beans.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="165.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="41.0" fitWidth="34.0" layoutX="172.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/cup.png" />
                      </image>
