@@ -37,7 +37,7 @@ public class ProductItemController implements Initializable {
     private Label priceLabel;
 
     @FXML
-    private Label productNameLabel;
+    public Label productNameLabel;
 
     @FXML
     private Spinner<Integer> prod_spinner;
@@ -83,7 +83,10 @@ public class ProductItemController implements Initializable {
         productDate = LocalDateTime.now();
 
         productIDtext.setText(String.valueOf(product.getProductId()));
+//        Tooltip tooltip = new Tooltip(product.getProductName());
+//        productNameLabel.setTooltip(tooltip);
         productNameLabel.setText(product.getProductName());
+
         priceLabel.setText("$" + String.valueOf(product.getPrice()));
 
         String path = "File:" + product.getImage();
@@ -271,6 +274,7 @@ public class ProductItemController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setQuantity();
-
+        Tooltip tooltip = new Tooltip(); // Tạo một Tooltip trống ban đầu
+        productNameLabel.setTooltip(tooltip);
     }
 }
