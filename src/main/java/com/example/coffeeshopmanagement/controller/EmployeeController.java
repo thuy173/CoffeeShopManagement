@@ -1,12 +1,11 @@
 package com.example.coffeeshopmanagement.controller;
 
 import com.example.coffeeshopmanagement.database.JDBCConnect;
+import com.example.coffeeshopmanagement.model.entity.Employee;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -15,7 +14,54 @@ import java.util.ResourceBundle;
 public class EmployeeController implements Initializable {
 
     @FXML
+    private TextField ID;
+
+    @FXML
+    private Button addButton;
+
+    @FXML
     private Button closeBtn;
+
+    @FXML
+    private Button deleteButton;
+
+    @FXML
+    private TableColumn<Employee, Integer> employeeID;
+    @FXML
+    private TableColumn<Employee, Integer> firstname;
+    @FXML
+    private TableColumn<Employee, Integer> lastname;
+    @FXML
+    private TableColumn<Employee, Integer> job;
+    @FXML
+    private TableColumn<Employee, Integer> salary;
+
+    @FXML
+    private TextField firstnameLabel;
+
+    @FXML
+    private TableColumn<Employee, String> hireDate;
+
+    @FXML
+    private DatePicker hiredateText;
+
+    @FXML
+    private Button export;
+
+    @FXML
+    private TextArea jobText;
+
+    @FXML
+    private TextField lastnameLabel;
+
+    @FXML
+    private TextField salaryLabel;
+
+    @FXML
+    private TableView<Employee> tableEmployee;
+
+    @FXML
+    private Button updateButton;
 
     private JDBCConnect jdbcConnect;
 
