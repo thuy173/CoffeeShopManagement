@@ -60,11 +60,6 @@
                         <Image url="@../image/coin.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="31.0" fitWidth="34.0" layoutX="276.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../image/coin.png" />
-                     </image>
-                  </ImageView>
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="196.0" prefWidth="350.0" style="-fx-background-radius: 30;" styleClass="right-bar" stylesheets="@../css/showProduct.css">
@@ -105,11 +100,6 @@
                         <Font name="Berlin Sans FB" size="26.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="69.0" fitWidth="58.0" layoutX="10.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../image/rating.png" />
-                     </image>
-                  </ImageView>
                   <ImageView fitHeight="59.0" fitWidth="57.0" layoutX="219.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/stars.png" />
@@ -139,11 +129,6 @@
                   <ImageView fitHeight="87.0" fitWidth="87.0" layoutX="42.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/coffee-pack.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="41.0" fitWidth="34.0" layoutX="172.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../image/cup.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="30.0" fitWidth="34.0" layoutX="480.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" rotate="-62.1">
@@ -180,11 +165,6 @@
                   <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="427.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/money.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="57.0" fitWidth="41.0" layoutX="174.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" rotate="-45.0">
-                     <image>
-                        <Image url="@../image/heart.png" />
                      </image>
                   </ImageView>
                </children>
