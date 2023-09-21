@@ -6,9 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class EmployeeController implements Initializable {
@@ -77,6 +80,26 @@ public class EmployeeController implements Initializable {
         this.stage = stage;
     }
 
+
+    public void showEmployee(Employee employee){
+        employeeID.setText(String.valueOf(employee.getEmployeeId()));
+        firstname.setText(employee.getFirstName());
+        lastname.setText(employee.getLastName());
+        jobText.setText(employee.getJobTitle());
+        data.date = String.valueOf(employee.getHireDate());
+        hiredateText.setValue(LocalDate.parse(data.date));
+        salaryLabel.setText(String.valueOf(employee.getSalary()));
+    }
+
+    private void loadEmployeeData(){
+        firstname.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        lastname.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        job.setCellValueFactory(new PropertyValueFactory<>("jobTitle"));
+        hireDate.setCellValueFactory(new PropertyValueFactory<>("hiredDate"));
+        salary.setCellValueFactory(new PropertyValueFactory<>("salary"));
+
+
+    }
 
     @FXML
     void close(ActionEvent event) {
