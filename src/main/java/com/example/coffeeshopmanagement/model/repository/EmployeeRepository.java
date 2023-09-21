@@ -1,0 +1,60 @@
+package com.example.coffeeshopmanagement.model.repository;
+
+import com.example.coffeeshopmanagement.database.JDBCConnect;
+import com.example.coffeeshopmanagement.model.entity.Employee;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class EmployeeRepository {
+    private final JDBCConnect jdbcConnect;
+
+    public EmployeeRepository() {
+        this.jdbcConnect = new JDBCConnect();
+    }
+    public List<Employee> getAllEmployee(){
+        List<Employee> employees = new ArrayList<>();
+        try{
+            Connection connection = jdbcConnect.getJDBCConnection();
+            String select = "SELECT * FROM employee";
+            PreparedStatement preparedStatement = connection.prepareStatement(select);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                Employee employee = new Employee();
+                employee.setEmployeeId(resultSet.getInt(""));
+                employee.setFirstName(resultSet.getString(""));
+                employee.setLastName(resultSet.getString(""));
+                employee.setJobTitle(resultSet.getString(""));
+                employee.setHireDate(resultSet.getDate(""));
+                employee.setSalary(resultSet.getDouble(""));
+                employees.add(employee);
+            }
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return employees;
+    }
+    public void addEmployee(Employee employee){
+        try {
+
+            Connection connection = jdbcConnect.getJDBCConnection();
+            String add = "INSERT INTO employee() VALUES()";
+            PreparedStatement preparedStatement = connection.prepareStatement(add);
+            preparedStatement.setString(1,employee.getFirstName());
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            connection.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+}
