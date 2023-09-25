@@ -61,4 +61,15 @@ public class EmployeeRepository {
         }
     }
 
+    public void deleteEmployee(int employeeId){
+        String sql = "DELETE  employee SET ";
+        Connection connection = jdbcConnect.getJDBCConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,employeeId);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 }
