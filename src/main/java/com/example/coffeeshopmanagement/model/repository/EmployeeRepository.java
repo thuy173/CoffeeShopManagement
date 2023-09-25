@@ -45,9 +45,13 @@ public class EmployeeRepository {
         try {
 
             Connection connection = jdbcConnect.getJDBCConnection();
-            String add = "INSERT INTO employee() VALUES()";
+            String add = "INSERT INTO employee(first_name, last_name, job_title, hire_date, salary) VALUES(?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(add);
             preparedStatement.setString(1,employee.getFirstName());
+            preparedStatement.setString(2, employee.getLastName());
+            preparedStatement.setString(3, employee.getJobTitle());
+            preparedStatement.setString(4, String.valueOf(employee.getHireDate()));
+            preparedStatement.setDouble(5, employee.getSalary());
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
