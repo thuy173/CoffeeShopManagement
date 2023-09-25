@@ -2,6 +2,7 @@ package com.example.coffeeshopmanagement.controller;
 
 import com.example.coffeeshopmanagement.database.JDBCConnect;
 import com.example.coffeeshopmanagement.model.entity.Employee;
+import com.example.coffeeshopmanagement.model.repository.EmployeeRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -70,6 +71,7 @@ public class EmployeeController implements Initializable {
 
     private Stage stage;
     private StageManager stageManager = new StageManager();
+    private EmployeeRepository employeeRepository = new EmployeeRepository();
 
     public EmployeeController() {
         this.jdbcConnect = new JDBCConnect();
@@ -98,7 +100,9 @@ public class EmployeeController implements Initializable {
         hireDate.setCellValueFactory(new PropertyValueFactory<>("hiredDate"));
         salary.setCellValueFactory(new PropertyValueFactory<>("salary"));
 
+        List<Employee> employeeList = employeeRepository.getAllEmployee();
 
+        tableEmployee.getItems().addAll(employeeList);
     }
 
     @FXML
