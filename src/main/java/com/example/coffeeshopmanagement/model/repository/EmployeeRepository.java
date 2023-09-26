@@ -62,12 +62,32 @@ public class EmployeeRepository {
     }
 
     public void deleteEmployee(int employeeId){
-        String sql = "DELETE  employee SET ";
+        String sql = "DELETE FROM employee WHERE employee_id = ? ";
         Connection connection = jdbcConnect.getJDBCConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1,employeeId);
         }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void updateEmployee(Employee employee) {
+        try {
+            Connection connection = jdbcConnect.getJDBCConnection();
+            String updateSql = "UPDATE employee SET first_name = ?, last_name = ?, job_title = ?, hire_date = ?, salary = ? WHERE employee_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(updateSql);
+            preparedStatement.setString(1, employee.getFirstName());
+            preparedStatement.setString(2, employee.getLastName());
+            preparedStatement.setString(3, employee.getJobTitle());
+            preparedStatement.setString(4, String.valueOf(employee.getHireDate()));
+            preparedStatement.setDouble(5, employee.getSalary());
+            preparedStatement.setInt(6, employee.getEmployeeId()); // Assuming you have an employee_id field.
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
