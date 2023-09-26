@@ -25,12 +25,12 @@ public class EmployeeRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 Employee employee = new Employee();
-                employee.setEmployeeId(resultSet.getInt(""));
-                employee.setFirstName(resultSet.getString(""));
-                employee.setLastName(resultSet.getString(""));
-                employee.setJobTitle(resultSet.getString(""));
-                employee.setHireDate(resultSet.getDate(""));
-                employee.setSalary(resultSet.getDouble(""));
+                employee.setEmployeeId(resultSet.getInt("employee_id"));
+                employee.setFirstName(resultSet.getString("first_name"));
+                employee.setLastName(resultSet.getString("last_name"));
+                employee.setJobTitle(resultSet.getString("job_title"));
+                employee.setHireDate(resultSet.getDate("hire_date"));
+                employee.setSalary(resultSet.getDouble("salary"));
                 employees.add(employee);
             }
             resultSet.close();

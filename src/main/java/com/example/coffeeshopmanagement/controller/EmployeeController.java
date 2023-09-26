@@ -83,21 +83,22 @@ public class EmployeeController implements Initializable {
     }
 
 
-    public void showEmployee(Employee employee){
-        employeeID.setText(String.valueOf(employee.getEmployeeId()));
-        firstname.setText(employee.getFirstName());
-        lastname.setText(employee.getLastName());
+    public void showEmployee(Employee employee) {
+        ID.setText(String.valueOf(employee.getEmployeeId()));
+        firstnameLabel.setText(employee.getFirstName());
+        lastnameLabel.setText(employee.getLastName());
         jobText.setText(employee.getJobTitle());
         data.date = String.valueOf(employee.getHireDate());
         hiredateText.setValue(LocalDate.parse(data.date));
         salaryLabel.setText(String.valueOf(employee.getSalary()));
     }
 
-    private void loadEmployeeData(){
+    private void loadEmployeeData() {
+        employeeID.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
         firstname.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastname.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         job.setCellValueFactory(new PropertyValueFactory<>("jobTitle"));
-        hireDate.setCellValueFactory(new PropertyValueFactory<>("hiredDate"));
+        hireDate.setCellValueFactory(new PropertyValueFactory<>("hireDate"));
         salary.setCellValueFactory(new PropertyValueFactory<>("salary"));
 
         List<Employee> employeeList = employeeRepository.getAllEmployee();
@@ -124,8 +125,14 @@ public class EmployeeController implements Initializable {
         }
 
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        tableEmployee.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                showEmployee(newValue);
+            }
+        });
+        loadEmployeeData();
     }
 }
