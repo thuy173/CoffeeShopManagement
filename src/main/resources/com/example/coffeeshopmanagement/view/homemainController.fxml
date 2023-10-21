@@ -100,9 +100,9 @@
                         <Font name="Berlin Sans FB" size="26.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="59.0" fitWidth="57.0" layoutX="219.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="302.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../image/stars.png" />
+                        <Image url="@../image/money.png" />
                      </image>
                   </ImageView>
                </children>
@@ -158,11 +158,6 @@
                         <Image url="@../image/wage.png" />
                      </image></ImageView>
                   <ImageView fitHeight="34.0" fitWidth="31.0" layoutX="461.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../image/money.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="427.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/money.png" />
                      </image>

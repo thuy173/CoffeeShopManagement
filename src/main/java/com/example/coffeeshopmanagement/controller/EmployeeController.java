@@ -105,6 +105,16 @@ public class EmployeeController implements Initializable {
 
         tableEmployee.getItems().addAll(employeeList);
     }
+    public void clear() {
+        ID.clear();
+        lastnameLabel.clear();
+        firstnameLabel.clear();
+//        categoryInput.setValue(null);
+        data.path = " ";
+        salaryLabel.clear();
+        jobText.clear();
+        hiredateText.setValue(null);
+    }
 
     @FXML
     void close(ActionEvent event) {
